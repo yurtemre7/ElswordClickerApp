@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    android:keepScreenOn="true"
+    tools:context="deve.org.elswordclicker.GameView">
+
+    <ImageView
+        android:id="@+id/enemy"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:contentDescription="@string/enemy"
+        android:cropToPadding="false"
+        android:defaultFocusHighlightEnabled="false"
+        android:fitsSystemWindows="true"
+        android:focusable="true"
+        android:hapticFeedbackEnabled="true"
+        android:scaleType="centerInside"
+        android:soundEffectsEnabled="true"
+        app:srcCompat="@drawable/enemy"
+        tools:targetApi="o" />
+
+    <ProgressBar
+        android:id="@+id/health"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/enemy"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:progressTint="@android:color/holo_orange_dark"
+        tools:targetApi="lollipop" />
+
+    <TextView
+        android:id="@+id/stage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:text="@string/stage_1"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@android:color/holo_orange_light"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/current_life_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/health"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/eldollar"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enemy"
+        android:layout_centerHorizontal="true"
+        android:text="@string/eldollar"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/skill1"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/garensword"
+        android:onClick="onSkill1" />
+
+    <Button
+        android:id="@+id/shop"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/skill1"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/holo_orange_light"
+        android:onClick="onShop" />
+
+    <TextView
+        android:id="@+id/dmmg"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/eldollar"
+        android:layout_alignStart="@+id/eldollar"
+        android:layout_below="@+id/eldollar"
+        android:text="@string/damage"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/ccrit"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dmmg"
+        android:layout_alignStart="@+id/dmmg"
+        android:layout_below="@+id/dmmg"
+        android:text="@string/crit"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/shop2"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/holo_orange_light"
+        android:onClick="onShop" />
+
+    <Button
+        android:id="@+id/button"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/stage"
+        android:layout_toLeftOf="@+id/shop"
+        android:layout_toStartOf="@+id/shop"
+        android:onClick="onAppInfo"
+        android:text="Info" />
+
+</RelativeLayout>

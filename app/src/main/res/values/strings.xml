@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Elsword Clicker</string>
+    <string name="background">Background</string>
+    <string name="longsword">Longsword</string>
+    <string name="bigsword">Bigsword</string>
+    <string name="critical_hit">Critical hit</string>
+    <string name="enemy">Enemy</string>
+    <string name="stage_1">Stage 1</string>
+    <string name="eldollar">Eldollar:</string>
+    <string name="todo">TODO</string>
+    <string name="damage">Damage:</string>
+    <string name="crit">Crit:</string>
+</resources>
