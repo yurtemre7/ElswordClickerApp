@@ -96,6 +96,8 @@ public class GameView extends AppCompatActivity {
                     onClickEnemy();
                 }else if(event.getAction()==MotionEvent.ACTION_UP){
                     onClickEnemy();
+                }else{
+                    onClickEnemy();
                 }
                 return true;
             }
