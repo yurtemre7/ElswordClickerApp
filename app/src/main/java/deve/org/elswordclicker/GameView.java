@@ -114,6 +114,23 @@ public class GameView extends AppCompatActivity {
 
     }
 });
+        onAutoClick1();
+    }
+    public void onAutoClick1(){
+        onClickEnemy();
+        h.postDelayed(new Runnable() {
+            public void run() {
+                onAutoClick2();
+            }
+        }, 1);
+    }
+    public void onAutoClick2(){
+        onClickEnemy();
+        h.postDelayed(new Runnable() {
+            public void run() {
+                onAutoClick1();
+            }
+        }, 1);
     }
     @SuppressLint("SetTextI18n")
     public void onSetup(){
@@ -221,6 +238,17 @@ public class GameView extends AppCompatActivity {
             editor.apply();
         }
         super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+        Toast.makeText(this, "Clicking in the background...", Toast.LENGTH_SHORT).show();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     @SuppressLint("SetTextI18n")
@@ -493,11 +521,13 @@ public void onStageTest(){
             ieldollar += (dmg + dollarperstage)*5;
             editor.putInt("e", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
+            editor.apply();
         }else{
             current_life -= dmg;
             ieldollar += dollarperstage+dmg;
             editor.putInt("e", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
+            editor.apply();
         }
 
         editor.putInt("c",current_life);
@@ -518,9 +548,9 @@ public void onStageTest(){
             health.setProgress(current_life);
 
             current_life_tv.setText(max_life+"/"+max_life);
+            editor.apply();
 
         }
-        editor.apply();
 
     }
 
