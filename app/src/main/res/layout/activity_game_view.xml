@@ -26,7 +26,7 @@
         android:hapticFeedbackEnabled="true"
         android:scaleType="centerInside"
         android:soundEffectsEnabled="true"
-        app:srcCompat="@drawable/enemy"
+        app:srcCompat="@drawable/eneeemy"
         tools:targetApi="o" />
 
     <ProgressBar
