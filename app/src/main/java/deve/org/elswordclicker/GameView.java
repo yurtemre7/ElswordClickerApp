@@ -12,9 +12,13 @@ import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -34,7 +38,7 @@ public class GameView extends AppCompatActivity {
     ProgressBar health;
     int max_life = 100;
     int current_life = 100;
-    TextView stage, eldollar,current_life_tv,ccrit,dmmg;
+    TextView stage, eldollar,ccrit,dmmg;
     int current_stage = 1;
     int ieldollar = 0;
     int longswoard_price = 500;
@@ -59,7 +63,6 @@ public class GameView extends AppCompatActivity {
 
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
 
-
         dollarperstage=current_stage/10+dmg;
         enemy = findViewById(R.id.enemy);
         health = findViewById(R.id.health);
@@ -82,7 +85,6 @@ public class GameView extends AppCompatActivity {
         skill1 = findViewById(R.id.skill1);
 
         rl = findViewById(R.id.rl);
-        current_life_tv = findViewById(R.id.current_life_tv);
         enemy.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -94,8 +96,35 @@ public class GameView extends AppCompatActivity {
                 return true;
             }
         });
+        enemy.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                return true;
+            }
+        });
 
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.info) {
+           onAppInfo();
+        }
+        if (id == R.id.shop) {
+            onShop();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @SuppressLint("SetTextI18n")
     public void onSetup(){
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
@@ -111,7 +140,6 @@ public class GameView extends AppCompatActivity {
         longswoard_price = sharedPref.getInt("lsp",500);
         crit = sharedPref.getInt("crit",0);
         crit_price = sharedPref.getInt("cp",1000);
-        current_life_tv.setText(current_life+"/"+max_life);
         bigswoard_price = sharedPref.getInt("bsp",(500*15));
         giantsword_price = sharedPref.getInt("gsp",(50000));
         ccrit.setText("Crit: "+crit);
@@ -119,7 +147,7 @@ public class GameView extends AppCompatActivity {
 
     }
     @SuppressLint({"NewApi", "SetTextI18n"})
-    public void onShop(View v){
+    public void onShop(){
         AlertDialog.Builder builder = new AlertDialog.Builder(GameView.this);
         LinearLayout ll = new LinearLayout(GameView.this);
         ll.setOrientation(LinearLayout.VERTICAL);
@@ -188,7 +216,6 @@ public class GameView extends AppCompatActivity {
         eldollar.setText("Eldollar: "+ieldollar);
         dmg = sharedPref.getInt("dmg",1);
         longswoard_price = sharedPref.getInt("lsp",500);
-        current_life_tv.setText(current_life+"/"+max_life);
         crit = sharedPref.getInt("crit",0);
         crit_price = sharedPref.getInt("cp",1000);
         bigswoard_price = sharedPref.getInt("bsp",(500*15));
@@ -282,7 +309,7 @@ public class GameView extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void onBuyCrit(){
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-        if(ieldollar>=crit_price && crit <= 49){
+        if(ieldollar>=crit_price && crit <= 99){
             ieldollar -= crit_price;
             crit += 1;
             ccrit.setText("Crit: "+crit);
@@ -295,7 +322,7 @@ public class GameView extends AppCompatActivity {
             editor.apply();
 
         }else{
-            if(crit <= 49){
+            if(crit <= 99){
                 final Toast toast =  Toast.makeText(getApplicationContext(),"-You need "+crit_price+" Eldollar-",Toast.LENGTH_SHORT);
                 toast.show();
                 h.postDelayed(new Runnable() {
@@ -340,7 +367,6 @@ public class GameView extends AppCompatActivity {
                      ieldollar += dmg*50;
                      editor.putInt("c",current_life);
                      health.setProgress(current_life);
-                     current_life_tv.setText(current_life+"/"+max_life);
                      editor.putInt("e", ieldollar);
                      eldollar.setText("Eldollar: "+ieldollar);
                      if(current_life <= 0){
@@ -356,7 +382,6 @@ public class GameView extends AppCompatActivity {
                          current_life = max_life;
                          health.setProgress(current_life);
 
-                         current_life_tv.setText(max_life+"/"+max_life);
                          editor.apply();
 
                      }
@@ -484,7 +509,6 @@ public void onStageTest(){
         editor.putInt("c",current_life);
         health.setProgress(current_life);
 
-        current_life_tv.setText(current_life+"/"+max_life);
         if(current_life <= 0){
             current_stage++;
             onStageTest();
@@ -498,14 +522,12 @@ public void onStageTest(){
             current_life = max_life;
             health.setProgress(current_life);
 
-            current_life_tv.setText(max_life+"/"+max_life);
-
         }
         editor.apply();
 
     }
 
-    public void onAppInfo(View v){
+    public void onAppInfo(){
         AlertDialog.Builder builder = new AlertDialog.Builder(GameView.this);
 
         builder.setTitle("App info");
