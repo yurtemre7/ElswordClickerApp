@@ -145,4 +145,13 @@
         android:onClick="onAppInfo"
         android:text="Info" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/eldollar"
+        android:layout_alignLeft="@+id/skill1"
+        android:layout_alignStart="@+id/skill1"
+        android:text="TextView" />
+
 </RelativeLayout>

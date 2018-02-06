@@ -1,7 +1,6 @@
 package deve.org.elswordclicker;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +18,6 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,8 +25,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.Random;
 
@@ -55,7 +50,6 @@ public class GameView extends AppCompatActivity {
     RelativeLayout rl;
     RelativeLayout.LayoutParams params;
     int dmg = 1;
-    long lastClickTime = 0;
     @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -96,41 +90,11 @@ public class GameView extends AppCompatActivity {
                     onClickEnemy();
                 }else if(event.getAction()==MotionEvent.ACTION_UP){
                     onClickEnemy();
-                }else{
-                    onClickEnemy();
                 }
                 return true;
             }
         });
-        enemy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (SystemClock.elapsedRealtime() - lastClickTime < 1000){
-                    onClickEnemy();
-                    return;
-                }
-                onClickEnemy();
-                lastClickTime = SystemClock.elapsedRealtime();
 
-    }
-});
-        onAutoClick1();
-    }
-    public void onAutoClick1(){
-        onClickEnemy();
-        h.postDelayed(new Runnable() {
-            public void run() {
-                onAutoClick2();
-            }
-        }, 1);
-    }
-    public void onAutoClick2(){
-        onClickEnemy();
-        h.postDelayed(new Runnable() {
-            public void run() {
-                onAutoClick1();
-            }
-        }, 1);
     }
     @SuppressLint("SetTextI18n")
     public void onSetup(){
@@ -238,17 +202,6 @@ public class GameView extends AppCompatActivity {
             editor.apply();
         }
         super.onStart();
-    }
-
-    @Override
-    protected void onPause() {
-        Toast.makeText(this, "Clicking in the background...", Toast.LENGTH_SHORT).show();
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
     @SuppressLint("SetTextI18n")
@@ -521,13 +474,11 @@ public void onStageTest(){
             ieldollar += (dmg + dollarperstage)*5;
             editor.putInt("e", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
-            editor.apply();
         }else{
             current_life -= dmg;
             ieldollar += dollarperstage+dmg;
             editor.putInt("e", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
-            editor.apply();
         }
 
         editor.putInt("c",current_life);
@@ -548,9 +499,9 @@ public void onStageTest(){
             health.setProgress(current_life);
 
             current_life_tv.setText(max_life+"/"+max_life);
-            editor.apply();
 
         }
+        editor.apply();
 
     }
 
