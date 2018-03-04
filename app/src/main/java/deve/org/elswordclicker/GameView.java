@@ -42,6 +42,7 @@ public class GameView extends AppCompatActivity {
     int crit = 0;
     int dollarperstage;
     int giantsword_price = 50000;
+    int giantplussword_price = 500000;
     Random r = new Random();
     Handler h = new Handler();
     RelativeLayout rl;
@@ -129,8 +130,10 @@ public class GameView extends AppCompatActivity {
         btn.setText("Longsword");
         Button btn2 = new Button(GameView.this);
         btn2.setText("Bigsword");
+        Button btn3 = new Button(GameView.this);
+        btn3.setText("Giantsword");
         Button btn4 = new Button(GameView.this);
-        btn4.setText("Giantsword");
+        btn4.setText("Giantplussword");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,15 +146,22 @@ public class GameView extends AppCompatActivity {
                 onBuyBigsword();
             }
         });
-        btn4.setOnClickListener(new View.OnClickListener() {
+        btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBuyGiantSword();
             }
         });
+        btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBuyGiantPlusSword();
+            }
+        });
         ll.addView(tw);
         ll.addView(btn);
         ll.addView(btn2);
+        ll.addView(btn3);
         ll.addView(btn4);
         AlertDialog diag = builder.create();
         diag.show();
@@ -174,9 +184,10 @@ public class GameView extends AppCompatActivity {
         dmg = sharedPref.getInt("dmg",1);
         longswoard_price = sharedPref.getInt("lsp",500);
         crit = sharedPref.getInt("critc",0);
-        bigswoard_price = sharedPref.getInt("bsp",(500*15));
+        bigswoard_price = sharedPref.getInt("bsp",(10000));
         dmmg.setText("Damage: "+dmg);
         giantsword_price = sharedPref.getInt("gsp",(50000));
+        giantplussword_price = sharedPref.getInt("gspp",(500000));
         super.onStart();
     }
 
@@ -212,12 +223,12 @@ public class GameView extends AppCompatActivity {
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         if(ieldollar>bigswoard_price){
             ieldollar -= bigswoard_price;
-            dmg += 15;
+            dmg += 20;
             dmmg.setText("Damage: "+dmg);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putLong("el", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
-            bigswoard_price += (500*15);
+            bigswoard_price += (10000);
             editor.putInt("bsp",bigswoard_price);
             editor.putInt("dmg",dmg);
             editor.apply();
@@ -249,6 +260,31 @@ public class GameView extends AppCompatActivity {
             editor.apply();
         }else{
             final Toast toast =  Toast.makeText(getApplicationContext(),"-You need "+giantsword_price+" Eldollar-",Toast.LENGTH_SHORT);
+            toast.show();
+            h.postDelayed(new Runnable() {
+                public void run() {
+                    toast.cancel();
+                }
+            }, 600);
+        }
+    }
+    //buying Giant Sword function
+    @SuppressLint("SetTextI18n")
+    public void onBuyGiantPlusSword(){
+        sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
+        if(ieldollar>giantplussword_price){
+            ieldollar -= giantplussword_price;
+            dmg += 1000;
+            dmmg.setText("Damage: "+dmg);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putLong("el", ieldollar);
+            eldollar.setText("Eldollar: "+ieldollar);
+            giantplussword_price += 500000;
+            editor.putInt("gspp",giantplussword_price);
+            editor.putInt("dmg",dmg);
+            editor.apply();
+        }else{
+            final Toast toast =  Toast.makeText(getApplicationContext(),"-You need "+giantplussword_price+" Eldollar-",Toast.LENGTH_SHORT);
             toast.show();
             h.postDelayed(new Runnable() {
                 public void run() {
