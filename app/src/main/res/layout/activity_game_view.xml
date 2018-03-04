@@ -5,13 +5,13 @@
     android:id="@+id/rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/colortv"
     android:keepScreenOn="true"
     tools:context="deve.org.elswordclicker.GameView">
 
     <ImageView
         android:id="@+id/enemy"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -26,7 +26,7 @@
         android:hapticFeedbackEnabled="true"
         android:scaleType="centerInside"
         android:soundEffectsEnabled="true"
-        app:srcCompat="@drawable/enenmy"
+        app:srcCompat="@drawable/elsword1"
         tools:targetApi="o" />
 
     <ProgressBar
@@ -34,74 +34,48 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/enemy"
-        android:layout_centerHorizontal="true"
-        android:progressTint="@android:color/holo_orange_dark"
+        android:layout_above="@+id/enemy"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:progressTint="@android:color/holo_red_light"
         tools:targetApi="lollipop" />
-
-    <Button
-        android:id="@+id/skill1"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/garensword"
-        android:onClick="onSkill1" />
 
     <TextView
         android:id="@+id/stage"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/skill1"
-        android:layout_toStartOf="@+id/skill1"
         android:text="@string/stage_1"
-        android:textAlignment="viewStart"
+        android:textAlignment="center"
         android:textAllCaps="true"
-        android:textColor="@android:color/holo_orange_light"
+        android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold" />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/health">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enemy"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/eldollar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="@string/eldollar"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/eldollar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/eldollar"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/dmmg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/damage"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/dmmg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/damage"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/ccrit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/crit"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
 </RelativeLayout>

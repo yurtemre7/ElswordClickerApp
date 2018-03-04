@@ -12,14 +12,11 @@ import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -29,7 +26,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.Random;
 
 public class GameView extends AppCompatActivity {
@@ -38,40 +34,33 @@ public class GameView extends AppCompatActivity {
     ProgressBar health;
     int max_life = 100;
     int current_life = 100;
-    TextView stage, eldollar,ccrit,dmmg;
+    TextView stage, eldollar,dmmg;
     int current_stage = 1;
-    int ieldollar = 0;
+    long ieldollar = 0;
     int longswoard_price = 500;
     int bigswoard_price = 10000;
-    int crit_price = 10000;
     int crit = 0;
     int dollarperstage;
     int giantsword_price = 50000;
     Random r = new Random();
-    int i = 1;
-    Button skill1;
     Handler h = new Handler();
     RelativeLayout rl;
     RelativeLayout.LayoutParams params;
     int dmg = 1;
+
     @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
-
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-
         dollarperstage=current_stage/10+dmg;
         enemy = findViewById(R.id.enemy);
         health = findViewById(R.id.health);
         stage = findViewById(R.id.stage);
         eldollar = findViewById(R.id.eldollar);
         dmmg = findViewById(R.id.dmmg);
-        ccrit = findViewById(R.id.ccrit);
-
-
         gs = new ImageView(GameView.this);
         gs.setImageDrawable(getDrawable(R.drawable.garensword));
         gs.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -82,8 +71,6 @@ public class GameView extends AppCompatActivity {
         params.leftMargin=500;
         params.rightMargin=500;
         params.bottomMargin=100;
-        skill1 = findViewById(R.id.skill1);
-
         rl = findViewById(R.id.rl);
         enemy.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -105,8 +92,6 @@ public class GameView extends AppCompatActivity {
         });
 
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -124,28 +109,6 @@ public class GameView extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    @SuppressLint("SetTextI18n")
-    public void onSetup(){
-        sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-        current_life = sharedPref.getInt("c",100);
-        health.setProgress(current_life);
-        max_life = sharedPref.getInt("l",100);
-        health.setMax(max_life);
-        current_stage = sharedPref.getInt("s",1);
-        stage.setText("Stage "+ current_stage);
-        ieldollar = sharedPref.getInt("e",0);
-        eldollar.setText("Eldollar: "+ieldollar);
-        dmg = sharedPref.getInt("dmg",1);
-        longswoard_price = sharedPref.getInt("lsp",500);
-        crit = sharedPref.getInt("crit",0);
-        crit_price = sharedPref.getInt("cp",1000);
-        bigswoard_price = sharedPref.getInt("bsp",(500*15));
-        giantsword_price = sharedPref.getInt("gsp",(50000));
-        ccrit.setText("Crit: "+crit);
-        dmmg.setText("Damage: "+dmg);
-
-    }
     @SuppressLint({"NewApi", "SetTextI18n"})
     public void onShop(){
         AlertDialog.Builder builder = new AlertDialog.Builder(GameView.this);
@@ -160,11 +123,8 @@ public class GameView extends AppCompatActivity {
         btn.setText("Longsword");
         Button btn2 = new Button(GameView.this);
         btn2.setText("Bigsword");
-        Button btn3 = new Button(GameView.this);
-        btn3.setText("Critical hit");
         Button btn4 = new Button(GameView.this);
         btn4.setText("Giantsword");
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,12 +137,6 @@ public class GameView extends AppCompatActivity {
                 onBuyBigsword();
             }
         });
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBuyCrit();
-            }
-        });
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,15 +146,10 @@ public class GameView extends AppCompatActivity {
         ll.addView(tw);
         ll.addView(btn);
         ll.addView(btn2);
-        ll.addView(btn3);
         ll.addView(btn4);
-
-
         AlertDialog diag = builder.create();
-
         diag.show();
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void onStart() {
@@ -212,25 +161,16 @@ public class GameView extends AppCompatActivity {
         health.setProgress(current_life);
         current_stage = sharedPref.getInt("s",1);
         stage.setText("Stage "+ current_stage);
-        ieldollar = sharedPref.getInt("e",0);
+        ieldollar = sharedPref.getLong("el",0);
         eldollar.setText("Eldollar: "+ieldollar);
         dmg = sharedPref.getInt("dmg",1);
         longswoard_price = sharedPref.getInt("lsp",500);
-        crit = sharedPref.getInt("crit",0);
-        crit_price = sharedPref.getInt("cp",1000);
+        crit = sharedPref.getInt("critc",0);
         bigswoard_price = sharedPref.getInt("bsp",(500*15));
-        ccrit.setText("Crit: "+crit);
         dmmg.setText("Damage: "+dmg);
         giantsword_price = sharedPref.getInt("gsp",(50000));
-
-        if(crit>=51){
-            crit=50;
-            editor.putInt("crit",crit);
-            editor.apply();
-        }
         super.onStart();
     }
-
     @SuppressLint("SetTextI18n")
     public void onBuyLongsword(){
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
@@ -239,13 +179,12 @@ public class GameView extends AppCompatActivity {
              dmg++;
              dmmg.setText("Damage: "+dmg);
              SharedPreferences.Editor editor = sharedPref.edit();
-             editor.putInt("e", ieldollar);
+             editor.putLong("el", ieldollar);
              eldollar.setText("Eldollar: "+ieldollar);
              longswoard_price += 500;
              editor.putInt("lsp",longswoard_price);
              editor.putInt("dmg",dmg);
              editor.apply();
-
          }else{
             final Toast toast =  Toast.makeText(getApplicationContext(),"-You need "+longswoard_price+" Eldollar-",Toast.LENGTH_SHORT);
             toast.show();
@@ -264,13 +203,12 @@ public class GameView extends AppCompatActivity {
             dmg += 15;
             dmmg.setText("Damage: "+dmg);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("e", ieldollar);
+            editor.putLong("el", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
             bigswoard_price += (500*15);
             editor.putInt("bsp",bigswoard_price);
             editor.putInt("dmg",dmg);
             editor.apply();
-
         }else{
             final Toast toast =  Toast.makeText(getApplicationContext(),"-You need "+bigswoard_price+" Eldollar-",Toast.LENGTH_SHORT);
             toast.show();
@@ -289,13 +227,12 @@ public class GameView extends AppCompatActivity {
             dmg += 100;
             dmmg.setText("Damage: "+dmg);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("e", ieldollar);
+            editor.putLong("el", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
             giantsword_price += 50000;
             editor.putInt("gsp",giantsword_price);
             editor.putInt("dmg",dmg);
             editor.apply();
-
         }else{
             final Toast toast =  Toast.makeText(getApplicationContext(),"-You need "+giantsword_price+" Eldollar-",Toast.LENGTH_SHORT);
             toast.show();
@@ -306,212 +243,26 @@ public class GameView extends AppCompatActivity {
             }, 600);
         }
     }
-    @SuppressLint("SetTextI18n")
-    public void onBuyCrit(){
-        sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-        if(ieldollar>=crit_price && crit <= 99){
-            ieldollar -= crit_price;
-            crit += 1;
-            ccrit.setText("Crit: "+crit);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("e", ieldollar);
-            eldollar.setText("Eldollar: "+ieldollar);
-            crit_price *= 2;
-            editor.putInt("cp",crit_price);
-            editor.putInt("crit",crit);
-            editor.apply();
-
-        }else{
-            if(crit <= 99){
-                final Toast toast =  Toast.makeText(getApplicationContext(),"-You need "+crit_price+" Eldollar-",Toast.LENGTH_SHORT);
-                toast.show();
-                h.postDelayed(new Runnable() {
-                    public void run() {
-                        toast.cancel();
-                    }
-                }, 600);
-            }else{
-                final Toast toast =  Toast.makeText(getApplicationContext(),"You already reached the max!\n",Toast.LENGTH_SHORT);
-                toast.show();
-                h.postDelayed(new Runnable() {
-                    public void run() {
-                        toast.cancel();
-                    }
-                }, 600);
-            }
-
-        }
-    }
-    public void onSkill1(View v){
-         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-         final SharedPreferences.Editor editor = sharedPref.edit();
-         if(i == 1){
-             rl.addView(gs,params);
-             i=0;
-             skill1.setVisibility(View.INVISIBLE);
-             gs.setVisibility(View.VISIBLE);
-             final float bottomOfScreen = getResources().getDisplayMetrics()
-                     .heightPixels - (enemy.getHeight());
-             gs.animate()
-                     .translationY(bottomOfScreen)
-                     .setInterpolator(new AccelerateInterpolator())
-                     .setDuration(1000);
-             h.postDelayed(new Runnable() {
-                 @SuppressLint("SetTextI18n")
-                 public void run() {
-                     gs.animate()
-                             .translationY(((-1)*bottomOfScreen)/12)
-                             .setDuration(100);
-                     rl.removeView(gs);
-                     current_life -= dmg*50;
-                     ieldollar += dmg*50;
-                     editor.putInt("c",current_life);
-                     health.setProgress(current_life);
-                     editor.putInt("e", ieldollar);
-                     eldollar.setText("Eldollar: "+ieldollar);
-                     if(current_life <= 0){
-                         current_stage++;
-                         onStageTest();
-                         editor.putInt("s",current_stage);
-                         stage.setText("Stage "+current_stage);
-
-                         max_life += 100;
-                         editor.putInt("l",max_life);
-                         health.setMax(max_life);
-
-                         current_life = max_life;
-                         health.setProgress(current_life);
-
-                         editor.apply();
-
-                     }
-                     h.postDelayed(new Runnable() {
-                         public void run() {
-                             rl.removeView(gs);
-                             skill1.setVisibility(View.VISIBLE);
-                             i = 1;
-                         }
-                     }, 60000);
-                 }
-             }, 1500);
-
-         }
-     }
-
     public void onShakeImage() {
         Animation shake;
         shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
         enemy.startAnimation(shake);
     }
-
-@SuppressLint("SetTextI18n")
-public void onStageTest(){
-    sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-    SharedPreferences.Editor editor = sharedPref.edit();
-
-    if(current_stage==88){
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameView.this);
-
-        builder.setTitle("CONGRATULATIONS TO 88 STAGES");
-
-        builder.setMessage("You'll get a bonus of 88% of your current Eldollar!");
-
-        AlertDialog diag = builder.create();
-
-        diag.show();
-
-        ieldollar *= 0.88;
-        editor.putInt("e", ieldollar);
-        eldollar.setText("Eldollar: "+ieldollar);
-    }
-    if(current_stage==333){
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameView.this);
-
-        builder.setTitle("CONGRATULATIONS TO 333 STAGES");
-
-        builder.setMessage("You'll get a bonus of 333% of your current Eldollar!");
-
-        AlertDialog diag = builder.create();
-
-        diag.show();
-
-        ieldollar *= 3.333;
-        editor.putInt("e", ieldollar);
-        eldollar.setText("Eldollar: "+ieldollar);
-    }
-    if(current_stage==1337){
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameView.this);
-
-        builder.setTitle("CONGRATULATIONS TO 1337 STAGES");
-
-        builder.setMessage("You'll get a bonus of 1337% of your current Eldollar!");
-
-        AlertDialog diag = builder.create();
-
-        diag.show();
-
-        ieldollar *= 13.37;
-        editor.putInt("e", ieldollar);
-        eldollar.setText("Eldollar: "+ieldollar);
-    }
-    if(current_stage==2018){
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameView.this);
-
-        builder.setTitle("CONGRATULATIONS TO 2018 STAGES");
-
-        builder.setMessage("You'll get a bonus of 2018% of your current Eldollar!");
-
-        AlertDialog diag = builder.create();
-
-        diag.show();
-
-        ieldollar *= 20.18;
-        editor.putInt("e", ieldollar);
-        eldollar.setText("Eldollar: "+ieldollar);
-    }
-    if(current_stage==4043){
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameView.this);
-
-        builder.setTitle("CONGRATULATIONS TO 4043 STAGES");
-
-        builder.setMessage("You'll get a bonus of 4043% of your current Eldollar!");
-
-        AlertDialog diag = builder.create();
-
-        diag.show();
-
-        ieldollar *= 40.43;
-        editor.putInt("e", ieldollar);
-        eldollar.setText("Eldollar: "+ieldollar);
-     }
-     editor.apply();
-    }
-
     @SuppressLint("SetTextI18n")
     public void onClickEnemy(){
         onShakeImage();
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        dollarperstage=current_stage+dmg;
-        int rnd = r.nextInt(101 - 1) + 1;
-        if(rnd<=crit){
-            current_life -= dmg*5;
-            ieldollar += (dmg + dollarperstage)*5;
-            editor.putInt("e", ieldollar);
-            eldollar.setText("Eldollar: "+ieldollar);
-        }else{
-            current_life -= dmg;
-            ieldollar += dollarperstage+dmg;
-            editor.putInt("e", ieldollar);
-            eldollar.setText("Eldollar: "+ieldollar);
-        }
-
+        dollarperstage= 2*(current_stage/10+dmg);
+        int rnd = r.nextInt(100) + 1;
+        current_life -= dmg;
+        ieldollar += dollarperstage+dmg;
+        editor.putLong("el", ieldollar);
+        eldollar.setText("Eldollar: "+ieldollar);
         editor.putInt("c",current_life);
         health.setProgress(current_life);
-
         if(current_life <= 0){
             current_stage++;
-            onStageTest();
             editor.putInt("s",current_stage);
             stage.setText("Stage "+current_stage);
 
@@ -521,17 +272,12 @@ public void onStageTest(){
 
             current_life = max_life;
             health.setProgress(current_life);
-
         }
         editor.apply();
-
     }
-
     public void onAppInfo(){
         AlertDialog.Builder builder = new AlertDialog.Builder(GameView.this);
-
         builder.setTitle("App info");
-
         builder.setMessage("This app/game was made by Emre.\nYou can tell me your feedback and if You have found a bug just tell it me in the group with a screenshot and a nice describtion of the bug.\n\nalpha version 1.0-1");
         builder.setPositiveButton("Join my Telegram group!", new DialogInterface.OnClickListener() {
                     @Override
@@ -541,9 +287,7 @@ public void onStageTest(){
                         startActivity(intent);
                     }
                 });
-
                 AlertDialog diag = builder.create();
-
         diag.show();
     }
 
