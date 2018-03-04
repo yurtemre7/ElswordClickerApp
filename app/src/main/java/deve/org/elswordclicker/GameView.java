@@ -48,6 +48,7 @@ public class GameView extends AppCompatActivity {
     RelativeLayout.LayoutParams params;
     int dmg = 1;
 
+    //on create function
     @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -92,12 +93,15 @@ public class GameView extends AppCompatActivity {
         });
 
     }
+
+    //function for creating the options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
+    //function for clicking the options menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -109,6 +113,8 @@ public class GameView extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    //shop function
     @SuppressLint({"NewApi", "SetTextI18n"})
     public void onShop(){
         AlertDialog.Builder builder = new AlertDialog.Builder(GameView.this);
@@ -150,6 +156,8 @@ public class GameView extends AppCompatActivity {
         AlertDialog diag = builder.create();
         diag.show();
     }
+
+    //Setting all variables to their saved value on every application start
     @SuppressLint("SetTextI18n")
     @Override
     protected void onStart() {
@@ -171,6 +179,8 @@ public class GameView extends AppCompatActivity {
         giantsword_price = sharedPref.getInt("gsp",(50000));
         super.onStart();
     }
+
+    //buying Long Sword function
     @SuppressLint("SetTextI18n")
     public void onBuyLongsword(){
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
@@ -195,6 +205,8 @@ public class GameView extends AppCompatActivity {
              }, 600);
          }
     }
+
+    //buying Big Sword function
     @SuppressLint("SetTextI18n")
     public void onBuyBigsword(){
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
@@ -219,6 +231,8 @@ public class GameView extends AppCompatActivity {
             }, 600);
         }
     }
+
+    //buying Giant Sword function
     @SuppressLint("SetTextI18n")
     public void onBuyGiantSword(){
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
@@ -243,11 +257,15 @@ public class GameView extends AppCompatActivity {
             }, 600);
         }
     }
+
+    //shacking Enemy function
     public void onShakeImage() {
         Animation shake;
         shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
         enemy.startAnimation(shake);
     }
+
+    //Clicking function
     @SuppressLint("SetTextI18n")
     public void onClickEnemy(){
         onShakeImage();
@@ -265,21 +283,21 @@ public class GameView extends AppCompatActivity {
             current_stage++;
             editor.putInt("s",current_stage);
             stage.setText("Stage "+current_stage);
-
             max_life += 100;
             editor.putInt("l",max_life);
             health.setMax(max_life);
-
             current_life = max_life;
             health.setProgress(current_life);
         }
         editor.apply();
     }
+
+    //"Information about the App"-Button
     public void onAppInfo(){
         AlertDialog.Builder builder = new AlertDialog.Builder(GameView.this);
-        builder.setTitle("App info");
-        builder.setMessage("This app/game was made by Emre.\nYou can tell me your feedback and if You have found a bug just tell it me in the group with a screenshot and a nice describtion of the bug.\n\nalpha version 1.0-1");
-        builder.setPositiveButton("Join my Telegram group!", new DialogInterface.OnClickListener() {
+                    builder.setTitle("App info");
+                    builder.setMessage("This app/game was made by Emre.\nYou can tell me your feedback and if You have found a bug just tell it me in the group with a screenshot and a nice describtion of the bug.\n\nalpha version 1.0-1");
+                    builder.setPositiveButton("Join my Telegram group!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(Intent.ACTION_VIEW,
@@ -287,8 +305,16 @@ public class GameView extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
+                    builder.setNegativeButton("Source Code here", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://github.com/EmiDevGerman/ElswordClickerApp"));
+                    startActivity(intent);
+                    }
+                });
                 AlertDialog diag = builder.create();
-        diag.show();
+                diag.show();
     }
 
 }
