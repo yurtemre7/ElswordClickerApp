@@ -122,18 +122,14 @@ public class GameView extends AppCompatActivity {
         LinearLayout ll = new LinearLayout(GameView.this);
         ll.setOrientation(LinearLayout.VERTICAL);
         builder.setView(ll);
-        TextView tw = new TextView(GameView.this);
-        tw.setText("Shop");
-        tw.setGravity(Gravity.CENTER);
-        tw.setTextColor(getColor(R.color.colortv));
         Button btn = new Button(GameView.this);
-        btn.setText("Longsword");
+        btn.setText("Longsword - "+longswoard_price);
         Button btn2 = new Button(GameView.this);
-        btn2.setText("Bigsword");
+        btn2.setText("Bigsword - "+bigswoard_price);
         Button btn3 = new Button(GameView.this);
-        btn3.setText("Giantsword");
+        btn3.setText("Giantsword - "+giantsword_price);
         Button btn4 = new Button(GameView.this);
-        btn4.setText("Giantplussword");
+        btn4.setText("Giantplussword - "+giantplussword_price);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +154,6 @@ public class GameView extends AppCompatActivity {
                 onBuyGiantPlusSword();
             }
         });
-        ll.addView(tw);
         ll.addView(btn);
         ll.addView(btn2);
         ll.addView(btn3);
