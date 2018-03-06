@@ -32,6 +32,7 @@ public class GameView extends AppCompatActivity {
     SharedPreferences sharedPref;
     ImageView enemy,gs;
     ProgressBar health;
+    Button btn,btn2,btn3,btn4;
     int max_life = 100;
     int current_life = 100;
     TextView stage, eldollar,dmmg;
@@ -122,14 +123,14 @@ public class GameView extends AppCompatActivity {
         LinearLayout ll = new LinearLayout(GameView.this);
         ll.setOrientation(LinearLayout.VERTICAL);
         builder.setView(ll);
-        Button btn = new Button(GameView.this);
-        btn.setText("Longsword - "+longswoard_price);
-        Button btn2 = new Button(GameView.this);
-        btn2.setText("Bigsword - "+bigswoard_price);
-        Button btn3 = new Button(GameView.this);
-        btn3.setText("Giantsword - "+giantsword_price);
-        Button btn4 = new Button(GameView.this);
-        btn4.setText("Giantplussword - "+giantplussword_price);
+        btn = new Button(GameView.this);
+        btn.setText("Longsword - "+longswoard_price +"ED");
+        btn2 = new Button(GameView.this);
+        btn2.setText("Bigsword - "+bigswoard_price +"ED");
+        btn3 = new Button(GameView.this);
+        btn3.setText("Giantsword - "+giantsword_price+ "ED");
+        btn4 = new Button(GameView.this);
+        btn4.setText("Giantplussword - "+giantplussword_price+ "ED");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -198,6 +199,7 @@ public class GameView extends AppCompatActivity {
              editor.putLong("el", ieldollar);
              eldollar.setText("Eldollar: "+ieldollar);
              longswoard_price += 500;
+             btn.setText("Longsword - "+longswoard_price +"ED");
              editor.putInt("lsp",longswoard_price);
              editor.putInt("dmg",dmg);
              editor.apply();
@@ -224,6 +226,7 @@ public class GameView extends AppCompatActivity {
             editor.putLong("el", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
             bigswoard_price += (10000);
+            btn2.setText("Bigsword - "+bigswoard_price +"ED");
             editor.putInt("bsp",bigswoard_price);
             editor.putInt("dmg",dmg);
             editor.apply();
@@ -250,6 +253,7 @@ public class GameView extends AppCompatActivity {
             editor.putLong("el", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
             giantsword_price += 50000;
+            btn3.setText("Giantsword - "+giantsword_price+ "ED");
             editor.putInt("gsp",giantsword_price);
             editor.putInt("dmg",dmg);
             editor.apply();
@@ -275,6 +279,7 @@ public class GameView extends AppCompatActivity {
             editor.putLong("el", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
             giantplussword_price += 500000;
+            btn4.setText("Giantplussword - "+giantplussword_price+ "ED");
             editor.putInt("gspp",giantplussword_price);
             editor.putInt("dmg",dmg);
             editor.apply();

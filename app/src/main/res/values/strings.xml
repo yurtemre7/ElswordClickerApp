@@ -6,8 +6,7 @@
     <string name="critical_hit">Critical hit</string>
     <string name="enemy">Enemy</string>
     <string name="stage_1">Stage 1</string>
-    <string name="eldollar">Eldollar:</string>
+    <string name="eldollar">ED:</string>
     <string name="todo">TODO</string>
-    <string name="damage">Damage:</string>
-    <string name="crit">Crit:</string>
+    <string name="damage">Dmg:</string>
 </resources>
