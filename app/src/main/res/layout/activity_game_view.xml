@@ -5,7 +5,7 @@
     android:id="@+id/rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colortv"
+    android:background="@color/grey"
     android:keepScreenOn="true"
     tools:context="deve.org.elswordclicker.GameView">
 
@@ -68,6 +68,8 @@
         android:layout_above="@+id/linearLayout"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:contentDescription="@string/magma"
         app:srcCompat="@drawable/magma" />
 
     <LinearLayout
@@ -81,19 +83,21 @@
             android:id="@+id/eldollar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="@string/eldollar"
             android:textColor="@color/white"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold" android:layout_marginStart="10dp" />
 
         <TextView
             android:id="@+id/dmmg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="@string/damage"
             android:textColor="@color/white"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold" android:layout_marginStart="10dp" />
 
     </LinearLayout>
 
