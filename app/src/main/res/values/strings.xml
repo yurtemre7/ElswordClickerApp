@@ -10,4 +10,8 @@
     <string name="todo">TODO</string>
     <string name="damage">Dmg:</string>
     <string name="magma">magma</string>
+    <string name="shop">Shop</string>
+    <string name="info">Info</string>
+    <string name="settings">Settings</string>
+    <string name="danke">Danke für das Spielen bzw. Testen meiner App!!! Du hilfst mir damit sehr und dafür wollte ich mich bei dir bedanken! Ich werde immer auf eure Wünsche programmieren und werde versuchen das Spiel weiter zu verbessern wie es nur geht und dafür brauche ich dein Feedback, deine Nutzererfahrungen und am aller wichtigsten deine Kreativität! Du kannst mich jederzeit auf Telegram anschreiben oder in der Gruppe (Die du bei dem Punkt INFO findest) deine Verbesserungen hineinschreiben.\n\nDein Entwickler, Emi Émre</string>
 </resources>

@@ -24,7 +24,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class GameView extends AppCompatActivity {
     SharedPreferences sharedPref;
@@ -38,7 +37,6 @@ public class GameView extends AppCompatActivity {
     long ieldollar = 0;
     int longswoard_price = 500;
     int bigswoard_price = 10000;
-    int crit = 0;
     int dollarperstage;
     int giantsword_price = 50000;
     int giantplussword_price = 500000;
@@ -52,7 +50,7 @@ public class GameView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_view);
+        setContentView(R.layout.gameview_main);
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         dollarperstage=current_stage/10+dmg;
         enemy = findViewById(R.id.enemy);
@@ -114,6 +112,9 @@ public class GameView extends AppCompatActivity {
         if (id == R.id.shop) {
             onShop();
         }
+        if (id == R.id.settings){
+            startActivity(new Intent(GameView.this, Settings.class));
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -125,13 +126,13 @@ public class GameView extends AppCompatActivity {
         ll.setOrientation(LinearLayout.VERTICAL);
         builder.setView(ll);
         btn = new Button(GameView.this);
-        btn.setText("Longsword - "+longswoard_price +"ED - " + "+1 DMG");
+        btn.setText("Longsword\n"+longswoard_price +"ED\n" + "+1 DMG");
         btn2 = new Button(GameView.this);
-        btn2.setText("Bigsword - "+bigswoard_price +"ED - "+ "+20 DMG");
+        btn2.setText("Bigsword\n"+bigswoard_price +"ED\n"+ "+20 DMG");
         btn3 = new Button(GameView.this);
-        btn3.setText("Giantsword - "+giantsword_price+ "ED - "+ "+100 DMG");
+        btn3.setText("Giantsword\n"+giantsword_price+ "ED\n"+ "+100 DMG");
         btn4 = new Button(GameView.this);
-        btn4.setText("Giantplussword - "+giantplussword_price+ "ED - "+ "+1000 DMG");
+        btn4.setText("Giantplussword\n"+giantplussword_price+ "ED\n"+ "+1000 DMG");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,11 +157,16 @@ public class GameView extends AppCompatActivity {
                 onBuyGiantPlusSword();
             }
         });
+        btn.setBackgroundColor(getResources().getColor(R.color.grey));
+        btn2.setBackgroundColor(getResources().getColor(R.color.grey));
+        btn3.setBackgroundColor(getResources().getColor(R.color.grey));
+        btn4.setBackgroundColor(getResources().getColor(R.color.grey));
         ll.addView(btn);
         ll.addView(btn2);
         ll.addView(btn3);
         ll.addView(btn4);
         AlertDialog diag = builder.create();
+        diag.getWindow().setBackgroundDrawableResource(R.color.grey);
         diag.show();
     }
 
@@ -169,7 +175,6 @@ public class GameView extends AppCompatActivity {
     @Override
     protected void onStart() {
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
         max_life = sharedPref.getInt("l",100);
         health.setMax(max_life);
         current_life = sharedPref.getInt("c",100);
@@ -180,7 +185,6 @@ public class GameView extends AppCompatActivity {
         eldollar.setText("Eldollar: "+ieldollar);
         dmg = sharedPref.getInt("dmg",1);
         longswoard_price = sharedPref.getInt("lsp",500);
-        crit = sharedPref.getInt("critc",0);
         bigswoard_price = sharedPref.getInt("bsp",(10000));
         dmmg.setText("Damage: "+dmg);
         giantsword_price = sharedPref.getInt("gsp",(50000));
@@ -201,18 +205,10 @@ public class GameView extends AppCompatActivity {
              editor.putLong("el", ieldollar);
              eldollar.setText("Eldollar: "+ieldollar);
              longswoard_price += 500;
-             btn.setText("Longsword - "+longswoard_price +"ED - " + "+1 DMG");
+             btn.setText("Longsword\n"+longswoard_price +"ED\n" + "+1 DMG");
              editor.putInt("lsp",longswoard_price);
              editor.putInt("dmg",dmg);
              editor.apply();
-         }else{
-            final Toast toast =  Toast.makeText(getApplicationContext(),"-You need "+longswoard_price+" Eldollar-",Toast.LENGTH_SHORT);
-            toast.show();
-             h.postDelayed(new Runnable() {
-                 public void run() {
-                    toast.cancel();
-                 }
-             }, 600);
          }
     }
 
@@ -228,18 +224,10 @@ public class GameView extends AppCompatActivity {
             editor.putLong("el", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
             bigswoard_price += (10000);
-            btn2.setText("Bigsword - "+bigswoard_price +"ED - " + "+1 DMG");
+            btn2.setText("Bigsword\n"+bigswoard_price +"ED\n" + "+20 DMG");
             editor.putInt("bsp",bigswoard_price);
             editor.putInt("dmg",dmg);
             editor.apply();
-        }else{
-            final Toast toast =  Toast.makeText(getApplicationContext(),"-You need "+bigswoard_price+" Eldollar-",Toast.LENGTH_SHORT);
-            toast.show();
-            h.postDelayed(new Runnable() {
-                public void run() {
-                    toast.cancel();
-                }
-            }, 600);
         }
     }
 
@@ -255,18 +243,10 @@ public class GameView extends AppCompatActivity {
             editor.putLong("el", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
             giantsword_price += 50000;
-            btn3.setText("Giantsword - "+giantsword_price+ "ED - " + "+1 DMG");
+            btn3.setText("Giantsword\n"+giantsword_price+ "ED\n" + "+100 DMG");
             editor.putInt("gsp",giantsword_price);
             editor.putInt("dmg",dmg);
             editor.apply();
-        }else{
-            final Toast toast =  Toast.makeText(getApplicationContext(),"-You need "+giantsword_price+" Eldollar-",Toast.LENGTH_SHORT);
-            toast.show();
-            h.postDelayed(new Runnable() {
-                public void run() {
-                    toast.cancel();
-                }
-            }, 600);
         }
     }
     //buying Giant Sword function
@@ -281,18 +261,10 @@ public class GameView extends AppCompatActivity {
             editor.putLong("el", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
             giantplussword_price += 500000;
-            btn4.setText("Giantplussword - "+giantplussword_price+"ED - " + "+1 DMG");
+            btn4.setText("Giantplussword\n"+giantplussword_price+"ED\n" + "+1.000 DMG");
             editor.putInt("gspp",giantplussword_price);
             editor.putInt("dmg",dmg);
             editor.apply();
-        }else{
-            final Toast toast =  Toast.makeText(getApplicationContext(),"-You need "+giantplussword_price+" Eldollar-",Toast.LENGTH_SHORT);
-            toast.show();
-            h.postDelayed(new Runnable() {
-                public void run() {
-                    toast.cancel();
-                }
-            }, 600);
         }
     }
 
@@ -305,30 +277,41 @@ public class GameView extends AppCompatActivity {
 
     //Clicking function
     @SuppressLint("SetTextI18n")
-    public void onClickEnemy(int magmadmg){
+    public void onClickEnemy(int magmadmg) {
         onShakeImage();
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        dollarperstage= 2*(current_stage/10+dmg);
+        dollarperstage = 2 * (current_stage / 10 + dmg + magmadmg);
         current_life -= (dmg + magmadmg);
-        ieldollar += dollarperstage+dmg;
+        ieldollar += dollarperstage + dmg;
         editor.putLong("el", ieldollar);
-        eldollar.setText("Eldollar: "+ieldollar);
-        editor.putInt("c",current_life);
+        eldollar.setText("Eldollar: " + ieldollar);
+        editor.putInt("c", current_life);
         health.setProgress(current_life);
-        while(current_life < 0){
+        while (current_life < 0) {
             current_stage++;
-            editor.putInt("s",current_stage);
-            stage.setText("Stage "+current_stage);
+            editor.putInt("s", current_stage);
+            stage.setText("Stage " + current_stage);
             max_life += 100;
-            editor.putInt("l",max_life);
+            editor.putInt("l", max_life);
             health.setMax(max_life);
             current_life = current_life + max_life;
             health.setProgress(current_life);
-            lifee.setText(current_life+"/"+max_life);
+            lifee.setText(current_life + "/" + max_life);
+            editor.putInt("c", current_life);
         }
-        lifee.setText(current_life+"/"+max_life);
+        lifee.setText(current_life + "/" + max_life);
         editor.apply();
+    }
+
+    //stop function
+    @Override
+    protected void onStop() {
+        sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("c",current_life);
+        editor.apply();
+        super.onStop();
     }
 
     //"Information about the App"-Button
@@ -353,6 +336,7 @@ public class GameView extends AppCompatActivity {
                     }
                 });
                 AlertDialog diag = builder.create();
+                diag.getWindow().setBackgroundDrawableResource(R.color.grey);
                 diag.show();
     }
 
