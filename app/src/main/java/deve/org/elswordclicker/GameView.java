@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -26,16 +25,17 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.Random;
 
 public class GameView extends AppCompatActivity {
     SharedPreferences sharedPref;
-    ImageView enemy,gs;
+    ImageView enemy,magma;
     ProgressBar health;
     Button btn,btn2,btn3,btn4;
     int max_life = 100;
     int current_life = 100;
-    TextView stage, eldollar,dmmg;
+    TextView stage, eldollar,dmmg,lifee;
     int current_stage = 1;
     long ieldollar = 0;
     int longswoard_price = 500;
@@ -47,7 +47,6 @@ public class GameView extends AppCompatActivity {
     Random r = new Random();
     Handler h = new Handler();
     RelativeLayout rl;
-    RelativeLayout.LayoutParams params;
     int dmg = 1;
 
     //on create function
@@ -60,28 +59,21 @@ public class GameView extends AppCompatActivity {
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         dollarperstage=current_stage/10+dmg;
         enemy = findViewById(R.id.enemy);
+        magma = findViewById(R.id.magma);
         health = findViewById(R.id.health);
         stage = findViewById(R.id.stage);
         eldollar = findViewById(R.id.eldollar);
         dmmg = findViewById(R.id.dmmg);
-        gs = new ImageView(GameView.this);
-        gs.setImageDrawable(getDrawable(R.drawable.garensword));
-        gs.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        gs.setRotation(135);
-        gs.setPadding(500,100,500,100);
-        params = new RelativeLayout.LayoutParams(500, 500);
-        params.topMargin=100;
-        params.leftMargin=500;
-        params.rightMargin=500;
-        params.bottomMargin=100;
+        lifee = findViewById(R.id.lifee);
+
         rl = findViewById(R.id.rl);
         enemy.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction()==MotionEvent.ACTION_DOWN){
-                    onClickEnemy();
+                    onClickEnemy(0);
                 }else if(event.getAction()==MotionEvent.ACTION_UP){
-                    onClickEnemy();
+                    onClickEnemy(0);
                 }
                 return true;
             }
@@ -91,6 +83,18 @@ public class GameView extends AppCompatActivity {
             public boolean onLongClick(View view) {
 
                 return true;
+            }
+        });
+        magma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                magma.setVisibility(View.INVISIBLE);
+                onClickEnemy(dmg*10);
+                h.postDelayed(new Runnable() {
+                    public void run() {
+                        magma.setVisibility(View.VISIBLE);
+                    }
+                }, (1000)*30);
             }
         });
 
@@ -124,13 +128,13 @@ public class GameView extends AppCompatActivity {
         ll.setOrientation(LinearLayout.VERTICAL);
         builder.setView(ll);
         btn = new Button(GameView.this);
-        btn.setText("Longsword - "+longswoard_price +"ED");
+        btn.setText("Longsword - "+longswoard_price +"ED" + "+1 DMG");
         btn2 = new Button(GameView.this);
-        btn2.setText("Bigsword - "+bigswoard_price +"ED");
+        btn2.setText("Bigsword - "+bigswoard_price +"ED"+ "+20 DMG");
         btn3 = new Button(GameView.this);
-        btn3.setText("Giantsword - "+giantsword_price+ "ED");
+        btn3.setText("Giantsword - "+giantsword_price+ "ED"+ "+100 DMG");
         btn4 = new Button(GameView.this);
-        btn4.setText("Giantplussword - "+giantplussword_price+ "ED");
+        btn4.setText("Giantplussword - "+giantplussword_price+ "ED"+ "+1000 DMG");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,6 +188,7 @@ public class GameView extends AppCompatActivity {
         dmmg.setText("Damage: "+dmg);
         giantsword_price = sharedPref.getInt("gsp",(50000));
         giantplussword_price = sharedPref.getInt("gspp",(500000));
+        lifee.setText(current_life+"/"+max_life);
         super.onStart();
     }
 
@@ -303,28 +308,29 @@ public class GameView extends AppCompatActivity {
 
     //Clicking function
     @SuppressLint("SetTextI18n")
-    public void onClickEnemy(){
+    public void onClickEnemy(int magmadmg){
         onShakeImage();
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         dollarperstage= 2*(current_stage/10+dmg);
-        int rnd = r.nextInt(100) + 1;
-        current_life -= dmg;
+        current_life -= (dmg + magmadmg);
         ieldollar += dollarperstage+dmg;
         editor.putLong("el", ieldollar);
         eldollar.setText("Eldollar: "+ieldollar);
         editor.putInt("c",current_life);
         health.setProgress(current_life);
-        if(current_life <= 0){
+        while(current_life < 0){
             current_stage++;
             editor.putInt("s",current_stage);
             stage.setText("Stage "+current_stage);
             max_life += 100;
             editor.putInt("l",max_life);
             health.setMax(max_life);
-            current_life = max_life;
+            current_life = current_life + max_life;
             health.setProgress(current_life);
+            lifee.setText(current_life+"/"+max_life);
         }
+        lifee.setText(current_life+"/"+max_life);
         editor.apply();
     }
 
@@ -332,7 +338,7 @@ public class GameView extends AppCompatActivity {
     public void onAppInfo(){
         AlertDialog.Builder builder = new AlertDialog.Builder(GameView.this);
                     builder.setTitle("App info");
-                    builder.setMessage("This app/game was made by Emre.\nYou can tell me your feedback and if You have found a bug just tell it me in the group with a screenshot and a nice describtion of the bug.\n\nalpha version 1.0-1");
+                    builder.setMessage("This app/game was made by Emre.\nYou can tell me your feedback and if You have found a bug just tell it me in the group with a screenshot and a nice describtion of the bug.\n\nalpha version 1.0-9");
                     builder.setPositiveButton("Join my Telegram group!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

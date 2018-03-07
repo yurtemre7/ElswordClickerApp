@@ -29,6 +29,15 @@
         app:srcCompat="@drawable/elsword1"
         tools:targetApi="o" />
 
+    <TextView
+        android:id="@+id/lifee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/health"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textColor="@android:color/white" />
+
     <ProgressBar
         android:id="@+id/health"
         style="?android:attr/progressBarStyleHorizontal"
@@ -37,7 +46,7 @@
         android:layout_above="@+id/enemy"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:progressTint="@android:color/holo_red_light"
+        android:progressTint="@android:color/white"
         tools:targetApi="lollipop" />
 
     <TextView
@@ -48,15 +57,25 @@
         android:text="@string/stage_1"
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:textColor="@color/white"
+        android:textColor="@android:color/background_dark"
         android:textSize="30sp"
         android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/magma"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        app:srcCompat="@drawable/magma" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/enemy"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/linearLayout">
 
         <TextView
             android:id="@+id/eldollar"
