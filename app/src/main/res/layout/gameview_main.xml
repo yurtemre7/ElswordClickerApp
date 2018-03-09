@@ -13,7 +13,8 @@
         android:id="@+id/enemy"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
@@ -34,7 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/health"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:textAlignment="center"
         android:textColor="@android:color/white" />
 
@@ -52,12 +54,15 @@
     <TextView
         android:id="@+id/stage"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lifee"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:fontFamily="casual"
         android:text="@string/stage_1"
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:textColor="@android:color/background_dark"
+        android:textColor="@android:color/background_light"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -84,20 +89,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:fontFamily="casual"
             android:text="@string/eldollar"
             android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" android:layout_marginStart="10dp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/dmmg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:fontFamily="casual"
             android:text="@string/damage"
             android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" android:layout_marginStart="10dp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

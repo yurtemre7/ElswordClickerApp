@@ -24,6 +24,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Random;
 
 public class GameView extends AppCompatActivity {
     SharedPreferences sharedPref;
@@ -43,6 +46,7 @@ public class GameView extends AppCompatActivity {
     Handler h = new Handler();
     RelativeLayout rl;
     int dmg = 1;
+    Random rn = new Random();
 
     //on create function
     @SuppressLint("ClickableViewAccessibility")
@@ -66,8 +70,6 @@ public class GameView extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction()==MotionEvent.ACTION_DOWN){
-                    onClickEnemy(0);
-                }else if(event.getAction()==MotionEvent.ACTION_UP){
                     onClickEnemy(0);
                 }
                 return true;
@@ -282,8 +284,15 @@ public class GameView extends AppCompatActivity {
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         dollarperstage = 2 * (current_stage / 10 + dmg + magmadmg);
-        current_life -= (dmg + magmadmg);
-        ieldollar += dollarperstage + dmg;
+        if(rn.nextInt(100-1)+1 == 61){
+            current_life -= 4*(dmg + magmadmg);
+            int extramoney = 4*(dollarperstage + (dmg+magmadmg));
+            ieldollar += extramoney;
+            Toast.makeText(this, "Crit: "+4*(dmg + magmadmg), Toast.LENGTH_SHORT).show();
+        }else{
+            current_life -= (dmg + magmadmg);
+            ieldollar += dollarperstage + (dmg+magmadmg);
+        }
         editor.putLong("el", ieldollar);
         eldollar.setText("Eldollar: " + ieldollar);
         editor.putInt("c", current_life);
