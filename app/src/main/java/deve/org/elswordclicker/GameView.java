@@ -30,7 +30,7 @@ import java.util.Random;
 
 public class GameView extends AppCompatActivity {
     SharedPreferences sharedPref;
-    ImageView enemy,magma;
+    ImageView enemy,magma,buggiebomb,milch;
     ProgressBar health;
     Button btn,btn2,btn3,btn4;
     int max_life = 100;
@@ -44,7 +44,7 @@ public class GameView extends AppCompatActivity {
     int giantsword_price = 50000;
     int giantplussword_price = 500000;
     Handler h = new Handler();
-    RelativeLayout rl;
+    LinearLayout rl;
     int dmg = 1;
     Random rn = new Random();
 
@@ -59,26 +59,25 @@ public class GameView extends AppCompatActivity {
         dollarperstage=current_stage/10+dmg;
         enemy = findViewById(R.id.enemy);
         magma = findViewById(R.id.magma);
+        buggiebomb = findViewById(R.id.buggiebomb);
+        milch = findViewById(R.id.milch);
         health = findViewById(R.id.health);
         stage = findViewById(R.id.stage);
         eldollar = findViewById(R.id.eldollar);
         dmmg = findViewById(R.id.dmmg);
         lifee = findViewById(R.id.lifee);
-
         rl = findViewById(R.id.rl);
-        enemy.setOnTouchListener(new View.OnTouchListener() {
+
+        enemy.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction()==MotionEvent.ACTION_DOWN){
-                    onClickEnemy(0);
-                }
-                return true;
+            public void onClick(View view) {
+                onClickEnemy(0);
             }
         });
         enemy.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-
+                
                 return true;
             }
         });
@@ -92,6 +91,30 @@ public class GameView extends AppCompatActivity {
                         magma.setVisibility(View.VISIBLE);
                     }
                 }, (1000)*30);
+            }
+        });
+        buggiebomb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buggiebomb.setVisibility(View.INVISIBLE);
+                onClickEnemy(dmg*20);
+                h.postDelayed(new Runnable() {
+                    public void run() {
+                        buggiebomb.setVisibility(View.VISIBLE);
+                    }
+                }, (1000)*60);
+            }
+        });
+        milch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                milch.setVisibility(View.INVISIBLE);
+                onClickEnemy(dmg*30);
+                h.postDelayed(new Runnable() {
+                    public void run() {
+                        milch.setVisibility(View.VISIBLE);
+                    }
+                }, (1000)*90);
             }
         });
 
