@@ -2,13 +2,8 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/shop"
-        android:title="@string/shop"
-        app:showAsAction="ifRoom|withText" />
-    <item
         android:id="@+id/info"
         android:title="@string/info"
-        android:visible="true"
         app:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/settings"

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="#000"
     tools:context="deve.org.elswordclicker.Settings">
 
     <LinearLayout
@@ -16,13 +16,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:fontFamily="sans-serif-smallcaps"
-            android:text="Danke für das Spielen bzw. Testen meiner App.. du hilfst mir damit sehr und dafür wollte ich mich bei dir bedanken!\nIch werde immer auf eure Wünsche programmieren und werde versuchen das Spiel weiter zu verbessern wie es nur geht und dafür brauche ich dein Feedback, deine Nutzererfahrungen und am aller wichtigsten deine Kreativität! Du kannst mich jederzeit auf Telegram anschreiben oder in der Gruppe (Die du bei dem Punkt INFO findest) deine Verbesserungen hineinschreiben.\n\nDein Entwickler, Emi Émre"
+            android:fontFamily="casual"
+            android:text="@string/danke"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="@android:color/background_dark"
-            android:textSize="23sp"
-            android:textStyle="italic" />
+            android:textColor="@color/white"
+            android:textSize="18sp" />
     </LinearLayout>
 
 

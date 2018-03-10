@@ -1,145 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="#000"
     android:keepScreenOn="true"
-    tools:context="deve.org.elswordclicker.GameView">
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
-        android:id="@+id/rl"
-        android:orientation="vertical"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="deve.org.elswordclicker.GameView">
-        <TextView
-            android:id="@+id/stage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/lifee"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:fontFamily="casual"
-            android:text="@string/stage_1"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="@android:color/background_light"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+        android:layout_height="70dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/black"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/enemy"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:adjustViewBounds="true"
-            android:background="@android:color/transparent"
-            android:clickable="true"
-            android:contentDescription="@string/enemy"
-            android:cropToPadding="false"
-            android:defaultFocusHighlightEnabled="false"
+            android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            android:focusable="true"
-            android:hapticFeedbackEnabled="true"
-            android:scaleType="centerInside"
-            android:soundEffectsEnabled="true"
-            app:srcCompat="@drawable/elsword1"
-            tools:targetApi="o" />
+            app:contentScrim="@color/black"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:toolbarId="@+id/toolbar">
 
-        <TextView
-            android:id="@+id/lifee"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/health"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textAlignment="center"
-            android:textColor="@android:color/white" />
-
-        <ProgressBar
-            android:id="@+id/health"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/enemy"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:progressTint="@android:color/white"
-            tools:targetApi="lollipop" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/magma"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="left"
-                android:layout_above="@+id/linearLayout"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/magma"
-                app:srcCompat="@drawable/magma" />
-
-            <ImageView
-                android:id="@+id/buggiebomb"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/buggiebomb" />
-
-            <ImageView
-                android:id="@+id/milch"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/milch" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/enemy"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/eldollar"
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:fontFamily="casual"
-                android:text="@string/eldollar"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:background="@color/black"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/dmmg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:fontFamily="casual"
-                android:text="@string/damage"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/eldollar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="casual"
+                    android:text="@string/eldollar"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:targetApi="jelly_bean" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/dmmg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="casual"
+                    android:text="@string/damage"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:targetApi="jelly_bean" />
 
+            </LinearLayout>
 
-    </LinearLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
 
+    <include
+        android:id="@+id/include2"
+        layout="@layout/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_bar"
+        android:layout_above="@+id/toolbar">
+    </include>
 
-</ScrollView>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:titleTextColor="@color/white"
+        app:subtitleTextColor="@color/white"
+        app:subtitle="just for fun :D"
+        android:gravity="bottom"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:title="by Emre"
+        tools:layout_editor_absoluteY="62dp" />
+
+</RelativeLayout>
