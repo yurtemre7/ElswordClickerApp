@@ -35,7 +35,7 @@ public class GameView extends AppCompatActivity {
     //the healthbar
     ProgressBar health;
     //all the buttons used
-    Button btn,btn2,btn3,btn4;
+    Button btn,btn2,btn3,btn4,btn5,btn6;
     //all the textviews used
     TextView stage, eldollar,dmmg,lifee;
     //for having delays
@@ -44,18 +44,25 @@ public class GameView extends AppCompatActivity {
     LinearLayout rl;
     //method to get random integer
     Random rn = new Random();
+    //Runnable function
+    Runnable runnable;
     //all the saved integer (numbers xD)
+    int delay = 10*1000;
+
     int max_life = 100;
     int current_life = 100;
     int current_stage = 1;
     long ieldollar = 0;
-    int longswoard_price = 500;
+    int longswoard_price = 1000;
     int bigswoard_price = 10000;
     int dollarperstage;
     int giantsword_price = 50000;
     int giantplussword_price = 500000;
+    int giantplusplussword_price = 5000000;
+    int giantplusplusplussword_price = 50000000;
     int dmg = 1;
     int intBoss = 1;
+
 
     //on create function
     @SuppressLint("ClickableViewAccessibility")
@@ -80,6 +87,8 @@ public class GameView extends AppCompatActivity {
         btn2 = findViewById(R.id.button2);
         btn3 = findViewById(R.id.button3);
         btn4 = findViewById(R.id.button4);
+        btn5 = findViewById(R.id.button5);
+        btn6 = findViewById(R.id.button6);
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         //methods to let this stuff being clickable
@@ -115,7 +124,7 @@ public class GameView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 magma.setVisibility(View.INVISIBLE);
-                onClickEnemy(dmg*10);
+                onClickEnemy(dmg*20);
                 h.postDelayed(new Runnable() {
                     public void run() {
                         magma.setVisibility(View.VISIBLE);
@@ -127,7 +136,7 @@ public class GameView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 buggiebomb.setVisibility(View.INVISIBLE);
-                onClickEnemy(dmg*20);
+                onClickEnemy(dmg*40);
                 h.postDelayed(new Runnable() {
                     public void run() {
                         buggiebomb.setVisibility(View.VISIBLE);
@@ -139,7 +148,7 @@ public class GameView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 milch.setVisibility(View.INVISIBLE);
-                onClickEnemy(dmg*30);
+                onClickEnemy(dmg*60);
                 h.postDelayed(new Runnable() {
                     public void run() {
                         milch.setVisibility(View.VISIBLE);
@@ -169,6 +178,18 @@ public class GameView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBuyGiantPlusSword();
+            }
+        });
+        btn5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBuyGiantPlusPlusSword();
+            }
+        });
+        btn6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBuyGiantPlusPlusPlusSword();
             }
         });
 
@@ -221,16 +242,20 @@ public class GameView extends AppCompatActivity {
         ieldollar = sharedPref.getLong("el",0);
         eldollar.setText("Eldollar: "+ieldollar);
         dmg = sharedPref.getInt("dmg",1);
-        longswoard_price = sharedPref.getInt("lsp",500);
+        longswoard_price = sharedPref.getInt("lsp",1000);
         bigswoard_price = sharedPref.getInt("bsp",(10000));
         dmmg.setText("Damage: "+dmg);
         giantsword_price = sharedPref.getInt("gsp",(50000));
         giantplussword_price = sharedPref.getInt("gspp",(500000));
+        giantplusplussword_price = sharedPref.getInt("gsppp",(5000000));
+        giantplusplusplussword_price = sharedPref.getInt("gspppp",(50000000));
         lifee.setText(current_life+"/"+max_life);
         btn.setText("Longsword\n"+longswoard_price +"ED\n" + "+1 DMG");
         btn2.setText("Bigsword\n"+bigswoard_price +"ED\n"+ "+20 DMG");
         btn3.setText("Giantsword\n"+giantsword_price+ "ED\n"+ "+100 DMG");
-        btn4.setText("Giantplussword\n"+giantplussword_price+ "ED\n"+ "+1000 DMG");
+        btn4.setText("Giant+sword\n"+giantplussword_price+ "ED\n"+ "+1.000 DMG");
+        btn5.setText("Giant++sword\n"+giantplusplussword_price+ "ED\n"+ "+10.000 DMG");
+        btn6.setText("Giant+++sword\n"+giantplusplusplussword_price+ "ED\n"+ "+100.000 DMG");
         super.onStart();
     }
 
@@ -240,19 +265,18 @@ public class GameView extends AppCompatActivity {
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
          if(ieldollar>=longswoard_price){
              ieldollar -= longswoard_price;
-             dmg++;
+             dmg =+ 2;
              dmmg.setText("Damage: "+dmg);
              SharedPreferences.Editor editor = sharedPref.edit();
              editor.putLong("el", ieldollar);
              eldollar.setText("Eldollar: "+ieldollar);
-             longswoard_price += 500;
-             btn.setText("Longsword\n"+longswoard_price +"ED\n" + "+1 DMG");
+             longswoard_price += 1000;
+             btn.setText("Longsword\n"+longswoard_price +"ED\n" + "+2 DMG");
              editor.putInt("lsp",longswoard_price);
              editor.putInt("dmg",dmg);
              editor.apply();
          }
     }
-
     //buying Big Sword function
     @SuppressLint("SetTextI18n")
     public void onBuyBigsword(){
@@ -271,7 +295,6 @@ public class GameView extends AppCompatActivity {
             editor.apply();
         }
     }
-
     //buying Giant Sword function
     @SuppressLint("SetTextI18n")
     public void onBuyGiantSword(){
@@ -290,8 +313,7 @@ public class GameView extends AppCompatActivity {
             editor.apply();
         }
     }
-
-    //buying Giant Sword function
+    //buying Giant Plus Sword function
     @SuppressLint("SetTextI18n")
     public void onBuyGiantPlusSword(){
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
@@ -303,8 +325,44 @@ public class GameView extends AppCompatActivity {
             editor.putLong("el", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
             giantplussword_price += 500000;
-            btn4.setText("Giantplussword\n"+giantplussword_price+"ED\n" + "+1.000 DMG");
+            btn4.setText("Giant+sword\n"+giantplussword_price+"ED\n" + "+1.000 DMG");
             editor.putInt("gspp",giantplussword_price);
+            editor.putInt("dmg",dmg);
+            editor.apply();
+        }
+    }
+    //buying Giant Plus Plus Sword function
+    @SuppressLint("SetTextI18n")
+    public void onBuyGiantPlusPlusSword(){
+        sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
+        if(ieldollar>giantplusplussword_price){
+            ieldollar -= giantplusplussword_price;
+            dmg += 10000;
+            dmmg.setText("Damage: "+dmg);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putLong("el", ieldollar);
+            eldollar.setText("Eldollar: "+ieldollar);
+            giantplusplussword_price += 5000000;
+            btn5.setText("Giant++sword\n"+giantplusplussword_price+"ED\n" + "+10.000 DMG");
+            editor.putInt("gsppp",giantplusplussword_price);
+            editor.putInt("dmg",dmg);
+            editor.apply();
+        }
+    }
+    //buying Giant Plus Plus Plus Sword function
+    @SuppressLint("SetTextI18n")
+    public void onBuyGiantPlusPlusPlusSword(){
+        sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
+        if(ieldollar>giantplusplusplussword_price){
+            ieldollar -= giantplusplusplussword_price;
+            dmg += 100000;
+            dmmg.setText("Damage: "+dmg);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putLong("el", ieldollar);
+            eldollar.setText("Eldollar: "+ieldollar);
+            giantplusplusplussword_price += 50000000;
+            btn6.setText("Giant+++sword\n"+giantplusplusplussword_price+"ED\n" + "+100.000 DMG");
+            editor.putInt("gspppp",giantplusplusplussword_price);
             editor.putInt("dmg",dmg);
             editor.apply();
         }
@@ -332,6 +390,32 @@ public class GameView extends AppCompatActivity {
             current_life -= (dmg + magmadmg);
             ieldollar += dollarperstage + (dmg+magmadmg);
         }
+        editor.putLong("el", ieldollar);
+        eldollar.setText("Eldollar: " + ieldollar);
+        editor.putInt("c", current_life);
+        health.setProgress(current_life);
+        while (current_life < 0) {
+            current_stage++;
+            editor.putInt("s", current_stage);
+            stage.setText("Stage " + current_stage);
+            max_life += 100;
+            editor.putInt("l", max_life);
+            health.setMax(max_life);
+            current_life = current_life + max_life;
+            health.setProgress(current_life);
+            lifee.setText(current_life + "/" + max_life);
+            editor.putInt("c", current_life);
+        }
+        lifee.setText(current_life + "/" + max_life);
+        editor.apply();
+    }
+    public void onAutoClickEnemy(){
+        onShakeImage();
+        sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        dollarperstage = (2 * (current_stage + dmg))/10;
+        current_life -= (dmg)/10;
+        ieldollar += dollarperstage + (dmg)/10;
         editor.putLong("el", ieldollar);
         eldollar.setText("Eldollar: " + ieldollar);
         editor.putInt("c", current_life);
@@ -385,6 +469,25 @@ public class GameView extends AppCompatActivity {
                 });
                 AlertDialog diag = builder.create();
                 diag.show();
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        h.postDelayed(new Runnable() {
+            public void run() {
+                onAutoClickEnemy();
+                runnable=this;
+                h.postDelayed(runnable, delay);
+            }
+        }, delay);
+        super.onResume();
+    }
+    @Override
+    protected void onPause() {
+        h.removeCallbacks(runnable);
+        super.onPause();
     }
 
 }
