@@ -46,23 +46,21 @@ public class GameView extends AppCompatActivity {
     Random rn = new Random();
     //Runnable function
     Runnable runnable;
-    //all the saved integer (numbers xD)
-    int delay = 10*1000;
-
+    //all saved (numbers xD)
+    int delay = (5)*1000;
     int max_life = 100;
     int current_life = 100;
     int current_stage = 1;
     long ieldollar = 0;
-    int longswoard_price = 1000;
-    int bigswoard_price = 10000;
-    int dollarperstage;
-    int giantsword_price = 50000;
-    int giantplussword_price = 500000;
-    int giantplusplussword_price = 5000000;
-    int giantplusplusplussword_price = 50000000;
-    int dmg = 1;
+    long longswoard_price = 500;
+    long bigswoard_price = 10000;
+    long dollarperstage;
+    long giantsword_price = 50000;
+    long giantplussword_price = 500000;
+    long giantplusplussword_price = 5000000;
+    long giantplusplusplussword_price = 50000000;
+    long dmg = 1;
     int intBoss = 1;
-
 
     //on create function
     @SuppressLint("ClickableViewAccessibility")
@@ -241,14 +239,14 @@ public class GameView extends AppCompatActivity {
         stage.setText("Stage "+ current_stage);
         ieldollar = sharedPref.getLong("el",0);
         eldollar.setText("Eldollar: "+ieldollar);
-        dmg = sharedPref.getInt("dmg",1);
-        longswoard_price = sharedPref.getInt("lsp",1000);
-        bigswoard_price = sharedPref.getInt("bsp",(10000));
+        dmg = sharedPref.getLong("dmgl",1);
+        longswoard_price = sharedPref.getLong("lspl",500);
+        bigswoard_price = sharedPref.getLong("bspl",(10000));
         dmmg.setText("Damage: "+dmg);
-        giantsword_price = sharedPref.getInt("gsp",(50000));
-        giantplussword_price = sharedPref.getInt("gspp",(500000));
-        giantplusplussword_price = sharedPref.getInt("gsppp",(5000000));
-        giantplusplusplussword_price = sharedPref.getInt("gspppp",(50000000));
+        giantsword_price = sharedPref.getLong("gspl",(50000));
+        giantplussword_price = sharedPref.getLong("gsppl",(500000));
+        giantplusplussword_price = sharedPref.getLong("gspppl",(5000000));
+        giantplusplusplussword_price = sharedPref.getLong("gsppppl",(50000000));
         lifee.setText(current_life+"/"+max_life);
         btn.setText("Longsword\n"+longswoard_price +"ED\n" + "+1 DMG");
         btn2.setText("Bigsword\n"+bigswoard_price +"ED\n"+ "+20 DMG");
@@ -265,15 +263,15 @@ public class GameView extends AppCompatActivity {
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
          if(ieldollar>=longswoard_price){
              ieldollar -= longswoard_price;
-             dmg =+ 2;
+             dmg++;
              dmmg.setText("Damage: "+dmg);
              SharedPreferences.Editor editor = sharedPref.edit();
              editor.putLong("el", ieldollar);
              eldollar.setText("Eldollar: "+ieldollar);
-             longswoard_price += 1000;
-             btn.setText("Longsword\n"+longswoard_price +"ED\n" + "+2 DMG");
-             editor.putInt("lsp",longswoard_price);
-             editor.putInt("dmg",dmg);
+             longswoard_price += 500;
+             btn.setText("Longsword\n"+longswoard_price +"ED\n" + "+1 DMG");
+             editor.putLong("lspl",longswoard_price);
+             editor.putLong("dmgl",dmg);
              editor.apply();
          }
     }
@@ -290,8 +288,8 @@ public class GameView extends AppCompatActivity {
             eldollar.setText("Eldollar: "+ieldollar);
             bigswoard_price += (10000);
             btn2.setText("Bigsword\n"+bigswoard_price +"ED\n" + "+20 DMG");
-            editor.putInt("bsp",bigswoard_price);
-            editor.putInt("dmg",dmg);
+            editor.putLong("bspl",bigswoard_price);
+            editor.putLong("dmgl",dmg);
             editor.apply();
         }
     }
@@ -308,8 +306,8 @@ public class GameView extends AppCompatActivity {
             eldollar.setText("Eldollar: "+ieldollar);
             giantsword_price += 50000;
             btn3.setText("Giantsword\n"+giantsword_price+ "ED\n" + "+100 DMG");
-            editor.putInt("gsp",giantsword_price);
-            editor.putInt("dmg",dmg);
+            editor.putLong("gspl",giantsword_price);
+            editor.putLong("dmgl",dmg);
             editor.apply();
         }
     }
@@ -326,8 +324,8 @@ public class GameView extends AppCompatActivity {
             eldollar.setText("Eldollar: "+ieldollar);
             giantplussword_price += 500000;
             btn4.setText("Giant+sword\n"+giantplussword_price+"ED\n" + "+1.000 DMG");
-            editor.putInt("gspp",giantplussword_price);
-            editor.putInt("dmg",dmg);
+            editor.putLong("gsppl",giantplussword_price);
+            editor.putLong("dmgl",dmg);
             editor.apply();
         }
     }
@@ -344,8 +342,8 @@ public class GameView extends AppCompatActivity {
             eldollar.setText("Eldollar: "+ieldollar);
             giantplusplussword_price += 5000000;
             btn5.setText("Giant++sword\n"+giantplusplussword_price+"ED\n" + "+10.000 DMG");
-            editor.putInt("gsppp",giantplusplussword_price);
-            editor.putInt("dmg",dmg);
+            editor.putLong("gspppl",giantplusplussword_price);
+            editor.putLong("dmgl",dmg);
             editor.apply();
         }
     }
@@ -362,8 +360,8 @@ public class GameView extends AppCompatActivity {
             eldollar.setText("Eldollar: "+ieldollar);
             giantplusplusplussword_price += 50000000;
             btn6.setText("Giant+++sword\n"+giantplusplusplussword_price+"ED\n" + "+100.000 DMG");
-            editor.putInt("gspppp",giantplusplusplussword_price);
-            editor.putInt("dmg",dmg);
+            editor.putLong("gsppppl",giantplusplusplussword_price);
+            editor.putLong("dmgl",dmg);
             editor.apply();
         }
     }
@@ -377,12 +375,12 @@ public class GameView extends AppCompatActivity {
 
     //Clicking function
     @SuppressLint("SetTextI18n")
-    public void onClickEnemy(int magmadmg) {
+    public void onClickEnemy(long magmadmg) {
         onShakeImage();
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         dollarperstage = 2 * (current_stage + dmg + magmadmg);
-        if(rn.nextInt(1000-1)+1 == 3){
+        if(rn.nextInt(1000-1)+1 == 1){
             current_life -= 10*(dmg + magmadmg);
             ieldollar += 10*(dollarperstage + (dmg+magmadmg));
             Toast.makeText(this, "Crit: "+10*(dmg + magmadmg), Toast.LENGTH_SHORT).show();
@@ -413,9 +411,9 @@ public class GameView extends AppCompatActivity {
         onShakeImage();
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        dollarperstage = (2 * (current_stage + dmg))/10;
-        current_life -= (dmg)/10;
-        ieldollar += dollarperstage + (dmg)/10;
+        dollarperstage = (2 * (current_stage + dmg));
+        current_life -= (dmg);
+        ieldollar += dollarperstage + (dmg);
         editor.putLong("el", ieldollar);
         eldollar.setText("Eldollar: " + ieldollar);
         editor.putInt("c", current_life);

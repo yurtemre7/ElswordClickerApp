@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="#000"
+    android:background="#FFF"
     android:keepScreenOn="true"
     android:fitsSystemWindows="true">
 
@@ -85,13 +85,14 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        app:titleTextColor="@color/white"
-        app:subtitleTextColor="@color/white"
-        app:subtitle="just for fun :D"
+        android:background="@color/colorPrimaryDark"
         android:gravity="bottom"
         app:layout_collapseMode="pin"
         app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:subtitle="just for fun :D"
+        app:subtitleTextColor="@color/white"
         app:title="by Emre"
+        app:titleTextColor="@color/white"
         tools:layout_editor_absoluteY="62dp" />
 
 </RelativeLayout>
