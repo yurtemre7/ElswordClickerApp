@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="#FFF"
+    android:background="#FF9999"
     android:keepScreenOn="true"
     android:fitsSystemWindows="true">
 
@@ -15,7 +15,7 @@
         android:layout_height="70dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:background="@color/black"
+        android:background="#FF9999"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/black"
+            app:contentScrim="#FF9999"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
@@ -36,7 +36,7 @@
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/black"
+                android:background="#FF9999"
                 android:orientation="vertical">
 
                 <TextView
@@ -82,10 +82,10 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimaryDark"
+        android:background="#FF9999"
         android:gravity="bottom"
         app:layout_collapseMode="pin"
         app:popupTheme="@style/AppTheme.PopupOverlay"

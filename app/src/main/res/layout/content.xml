@@ -41,7 +41,7 @@
             android:hapticFeedbackEnabled="true"
             android:scaleType="centerInside"
             android:soundEffectsEnabled="true"
-            app:srcCompat="@drawable/elsword1"
+            app:srcCompat="@drawable/e1"
             tools:targetApi="o"  />
 
         <TextView

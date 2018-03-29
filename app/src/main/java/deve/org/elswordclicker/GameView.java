@@ -101,13 +101,13 @@ public class GameView extends AppCompatActivity {
             public boolean onLongClick(View view) {
                 intBoss++;
                 switch (intBoss){
-                    case 1: enemy.setImageResource(R.drawable.elsword1);
+                    case 1: enemy.setImageResource(R.drawable.e1);
                         break;
-                    case 2: enemy.setImageResource(R.drawable.elsword2);
+                    case 2: enemy.setImageResource(R.drawable.e2);
                         break;
-                    case 3: enemy.setImageResource(R.drawable.elsword3);
+                    case 3: enemy.setImageResource(R.drawable.e3);
                         break;
-                    case 4: enemy.setImageResource(R.drawable.elsword4);
+                    case 4: enemy.setImageResource(R.drawable.e4);
                             intBoss = 0;
                         break;
                 }
@@ -222,13 +222,13 @@ public class GameView extends AppCompatActivity {
         max_life = sharedPref.getInt("l",100);
         intBoss = sharedPref.getInt("boss",1);
         switch (intBoss){
-            case 1: enemy.setImageResource(R.drawable.elsword1);
+            case 1: enemy.setImageResource(R.drawable.e1);
                 break;
-            case 2: enemy.setImageResource(R.drawable.elsword2);
+            case 2: enemy.setImageResource(R.drawable.e2);
                 break;
-            case 3: enemy.setImageResource(R.drawable.elsword3);
+            case 3: enemy.setImageResource(R.drawable.e3);
                 break;
-            case 4: enemy.setImageResource(R.drawable.elsword4);
+            case 4: enemy.setImageResource(R.drawable.e4);
                 intBoss = 1;
                 break;
         }
