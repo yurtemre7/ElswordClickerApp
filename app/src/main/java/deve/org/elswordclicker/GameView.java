@@ -35,9 +35,9 @@ public class GameView extends AppCompatActivity {
     //the healthbar
     ProgressBar health;
     //all the buttons used
-    Button btn,btn2,btn3,btn4,btn5,btn6;
+    Button btn,btn2;
     //all the textviews used
-    TextView stage, eldollar,dmmg,lifee;
+    TextView stage, eldollar,dmmg,lifee,acs;
     //for having delays
     Handler h = new Handler();
     //the layout
@@ -47,18 +47,25 @@ public class GameView extends AppCompatActivity {
     //Runnable function
     Runnable runnable;
     //all saved (numbers xD)
-    int delay = (5)*1000;
+
+
+    int delay = 10000;
+    int autoclick = 0;
+
     int max_life = 100;
     int current_life = 100;
     int current_stage = 1;
+
     long ieldollar = 0;
-    long longswoard_price = 500;
-    long bigswoard_price = 10000;
+
+    long longswoard_price = 100;
+    int autoclick_price = 15000;
+
+
+
     long dollarperstage;
-    long giantsword_price = 50000;
-    long giantplussword_price = 500000;
-    long giantplusplussword_price = 5000000;
-    long giantplusplusplussword_price = 50000000;
+
+
     long dmg = 1;
     int intBoss = 1;
 
@@ -83,10 +90,7 @@ public class GameView extends AppCompatActivity {
         rl = findViewById(R.id.rl);
         btn = findViewById(R.id.button);
         btn2 = findViewById(R.id.button2);
-        btn3 = findViewById(R.id.button3);
-        btn4 = findViewById(R.id.button4);
-        btn5 = findViewById(R.id.button5);
-        btn6 = findViewById(R.id.button6);
+        acs = findViewById(R.id.acs);
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         //methods to let this stuff being clickable
@@ -96,38 +100,16 @@ public class GameView extends AppCompatActivity {
                 onClickEnemy(0);
             }
         });
-        enemy.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                intBoss++;
-                switch (intBoss){
-                    case 1: enemy.setImageResource(R.drawable.e1);
-                        break;
-                    case 2: enemy.setImageResource(R.drawable.e2);
-                        break;
-                    case 3: enemy.setImageResource(R.drawable.e3);
-                        break;
-                    case 4: enemy.setImageResource(R.drawable.e4);
-                            intBoss = 0;
-                        break;
-                }
-                sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("boss",intBoss);
-                editor.apply();
-                return true;
-            }
-        });
         magma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 magma.setVisibility(View.INVISIBLE);
-                onClickEnemy(dmg*20);
+                onClickEnemy(dmg*10);
                 h.postDelayed(new Runnable() {
                     public void run() {
                         magma.setVisibility(View.VISIBLE);
                     }
-                }, (1000)*30);
+                }, (1000)*45);
             }
         });
         buggiebomb.setOnClickListener(new View.OnClickListener() {
@@ -139,19 +121,19 @@ public class GameView extends AppCompatActivity {
                     public void run() {
                         buggiebomb.setVisibility(View.VISIBLE);
                     }
-                }, (1000)*60);
+                }, (1000)*90);
             }
         });
         milch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 milch.setVisibility(View.INVISIBLE);
-                onClickEnemy(dmg*60);
+                onClickEnemy(dmg*80);
                 h.postDelayed(new Runnable() {
                     public void run() {
                         milch.setVisibility(View.VISIBLE);
                     }
-                }, (1000)*90);
+                }, (1000)*180);
             }
         });
         btn.setOnClickListener(new View.OnClickListener() {
@@ -163,31 +145,7 @@ public class GameView extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBuyBigsword();
-            }
-        });
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBuyGiantSword();
-            }
-        });
-        btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBuyGiantPlusSword();
-            }
-        });
-        btn5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBuyGiantPlusPlusSword();
-            }
-        });
-        btn6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBuyGiantPlusPlusPlusSword();
+                onBuyAutoClick();
             }
         });
 
@@ -207,10 +165,6 @@ public class GameView extends AppCompatActivity {
         if (id == R.id.info) {
            onAppInfo();
         }
-        //when you click settings
-        if (id == R.id.settings){
-            startActivity(new Intent(GameView.this, Settings.class));
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -219,41 +173,25 @@ public class GameView extends AppCompatActivity {
     @Override
     protected void onStart() {
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-        max_life = sharedPref.getInt("l",100);
+        max_life = sharedPref.getInt("mlife",100);
         intBoss = sharedPref.getInt("boss",1);
-        switch (intBoss){
-            case 1: enemy.setImageResource(R.drawable.e1);
-                break;
-            case 2: enemy.setImageResource(R.drawable.e2);
-                break;
-            case 3: enemy.setImageResource(R.drawable.e3);
-                break;
-            case 4: enemy.setImageResource(R.drawable.e4);
-                intBoss = 1;
-                break;
-        }
+        enemy.setImageResource(R.drawable.e1);
         health.setMax(max_life);
-        current_life = sharedPref.getInt("c",100);
+        current_life = sharedPref.getInt("clife",100);
         health.setProgress(current_life);
-        current_stage = sharedPref.getInt("s",1);
+        current_stage = sharedPref.getInt("stage",1);
         stage.setText("Stage "+ current_stage);
-        ieldollar = sharedPref.getLong("el",0);
+        ieldollar = sharedPref.getLong("eldollar",0);
         eldollar.setText("Eldollar: "+ieldollar);
-        dmg = sharedPref.getLong("dmgl",1);
-        longswoard_price = sharedPref.getLong("lspl",500);
-        bigswoard_price = sharedPref.getLong("bspl",(10000));
+        dmg = sharedPref.getLong("damage",1);
+        longswoard_price = sharedPref.getLong("longswordp",100);
         dmmg.setText("Damage: "+dmg);
-        giantsword_price = sharedPref.getLong("gspl",(50000));
-        giantplussword_price = sharedPref.getLong("gsppl",(500000));
-        giantplusplussword_price = sharedPref.getLong("gspppl",(5000000));
-        giantplusplusplussword_price = sharedPref.getLong("gsppppl",(50000000));
         lifee.setText(current_life+"/"+max_life);
         btn.setText("Longsword\n"+longswoard_price +"ED\n" + "+1 DMG");
-        btn2.setText("Bigsword\n"+bigswoard_price +"ED\n"+ "+20 DMG");
-        btn3.setText("Giantsword\n"+giantsword_price+ "ED\n"+ "+100 DMG");
-        btn4.setText("Giant+sword\n"+giantplussword_price+ "ED\n"+ "+1.000 DMG");
-        btn5.setText("Giant++sword\n"+giantplusplussword_price+ "ED\n"+ "+10.000 DMG");
-        btn6.setText("Giant+++sword\n"+giantplusplusplussword_price+ "ED\n"+ "+100.000 DMG");
+        autoclick_price = sharedPref.getInt("autoclickp",15000);
+        btn2.setText("Autoclick\n"+autoclick_price+"ED\n"+"-100ms");
+        delay = sharedPref.getInt("delay",5000);
+        acs.setText("dmg/ms: "+dmg+"/"+delay);
         super.onStart();
     }
 
@@ -266,103 +204,38 @@ public class GameView extends AppCompatActivity {
              dmg++;
              dmmg.setText("Damage: "+dmg);
              SharedPreferences.Editor editor = sharedPref.edit();
-             editor.putLong("el", ieldollar);
+             editor.putLong("eldollar", ieldollar);
              eldollar.setText("Eldollar: "+ieldollar);
-             longswoard_price += 500;
+             longswoard_price += 100;
              btn.setText("Longsword\n"+longswoard_price +"ED\n" + "+1 DMG");
-             editor.putLong("lspl",longswoard_price);
-             editor.putLong("dmgl",dmg);
+             acs.setText("dmg/ms: "+dmg+"/"+delay);
+             editor.putLong("longswordp",longswoard_price);
+             editor.putLong("damage",dmg);
              editor.apply();
+         }else{
+             Toast.makeText(this, "Not enaugh money.", Toast.LENGTH_SHORT).show();
          }
     }
-    //buying Big Sword function
     @SuppressLint("SetTextI18n")
-    public void onBuyBigsword(){
+    public void onBuyAutoClick(){
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-        if(ieldollar>bigswoard_price){
-            ieldollar -= bigswoard_price;
-            dmg += 20;
-            dmmg.setText("Damage: "+dmg);
+        if(ieldollar>=autoclick_price){
+            ieldollar -= autoclick_price;
+            autoclick++;
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putLong("el", ieldollar);
+            editor.putInt("ac",autoclick);
+            editor.putLong("eldollar", ieldollar);
             eldollar.setText("Eldollar: "+ieldollar);
-            bigswoard_price += (10000);
-            btn2.setText("Bigsword\n"+bigswoard_price +"ED\n" + "+20 DMG");
-            editor.putLong("bspl",bigswoard_price);
-            editor.putLong("dmgl",dmg);
+            delay = delay - 100;
+            editor.putInt("delay",delay);
+            autoclick_price += 15000;
+            editor.putInt("autoclickp", autoclick_price);
+            btn2.setText("Autoclick\n"+autoclick_price +"ED\n" + "-100ms");
+            acs.setText("dmg/ms: "+dmg+"/"+delay);
             editor.apply();
-        }
-    }
-    //buying Giant Sword function
-    @SuppressLint("SetTextI18n")
-    public void onBuyGiantSword(){
-        sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-        if(ieldollar>giantsword_price){
-            ieldollar -= giantsword_price;
-            dmg += 100;
-            dmmg.setText("Damage: "+dmg);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putLong("el", ieldollar);
-            eldollar.setText("Eldollar: "+ieldollar);
-            giantsword_price += 50000;
-            btn3.setText("Giantsword\n"+giantsword_price+ "ED\n" + "+100 DMG");
-            editor.putLong("gspl",giantsword_price);
-            editor.putLong("dmgl",dmg);
-            editor.apply();
-        }
-    }
-    //buying Giant Plus Sword function
-    @SuppressLint("SetTextI18n")
-    public void onBuyGiantPlusSword(){
-        sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-        if(ieldollar>giantplussword_price){
-            ieldollar -= giantplussword_price;
-            dmg += 1000;
-            dmmg.setText("Damage: "+dmg);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putLong("el", ieldollar);
-            eldollar.setText("Eldollar: "+ieldollar);
-            giantplussword_price += 500000;
-            btn4.setText("Giant+sword\n"+giantplussword_price+"ED\n" + "+1.000 DMG");
-            editor.putLong("gsppl",giantplussword_price);
-            editor.putLong("dmgl",dmg);
-            editor.apply();
-        }
-    }
-    //buying Giant Plus Plus Sword function
-    @SuppressLint("SetTextI18n")
-    public void onBuyGiantPlusPlusSword(){
-        sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-        if(ieldollar>giantplusplussword_price){
-            ieldollar -= giantplusplussword_price;
-            dmg += 10000;
-            dmmg.setText("Damage: "+dmg);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putLong("el", ieldollar);
-            eldollar.setText("Eldollar: "+ieldollar);
-            giantplusplussword_price += 5000000;
-            btn5.setText("Giant++sword\n"+giantplusplussword_price+"ED\n" + "+10.000 DMG");
-            editor.putLong("gspppl",giantplusplussword_price);
-            editor.putLong("dmgl",dmg);
-            editor.apply();
-        }
-    }
-    //buying Giant Plus Plus Plus Sword function
-    @SuppressLint("SetTextI18n")
-    public void onBuyGiantPlusPlusPlusSword(){
-        sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-        if(ieldollar>giantplusplusplussword_price){
-            ieldollar -= giantplusplusplussword_price;
-            dmg += 100000;
-            dmmg.setText("Damage: "+dmg);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putLong("el", ieldollar);
-            eldollar.setText("Eldollar: "+ieldollar);
-            giantplusplusplussword_price += 50000000;
-            btn6.setText("Giant+++sword\n"+giantplusplusplussword_price+"ED\n" + "+100.000 DMG");
-            editor.putLong("gsppppl",giantplusplusplussword_price);
-            editor.putLong("dmgl",dmg);
-            editor.apply();
+
+        }else{
+            Toast.makeText(this, "Not enaugh money.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -381,32 +254,46 @@ public class GameView extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         dollarperstage = 2 * (current_stage + dmg + magmadmg);
         if(rn.nextInt(1000-1)+1 == 1){
-            current_life -= 10*(dmg + magmadmg);
-            ieldollar += 10*(dollarperstage + (dmg+magmadmg));
-            Toast.makeText(this, "Crit: "+10*(dmg + magmadmg), Toast.LENGTH_SHORT).show();
+            current_life -= 100*(dmg + magmadmg);
+            ieldollar += 100*(dollarperstage + (dmg+magmadmg));
+            Toast.makeText(this, "Crit: "+10*(dmg + magmadmg), Toast.LENGTH_LONG).show();
         }else{
             current_life -= (dmg + magmadmg);
             ieldollar += dollarperstage + (dmg+magmadmg);
         }
-        editor.putLong("el", ieldollar);
+        editor.putLong("eldollar", ieldollar);
         eldollar.setText("Eldollar: " + ieldollar);
-        editor.putInt("c", current_life);
+        editor.putInt("clife", current_life);
         health.setProgress(current_life);
         while (current_life < 0) {
             current_stage++;
-            editor.putInt("s", current_stage);
+            intBoss++;
+            editor.putInt("stage", current_stage);
             stage.setText("Stage " + current_stage);
             max_life += 100;
-            editor.putInt("l", max_life);
+            editor.putInt("mlife", max_life);
             health.setMax(max_life);
             current_life = current_life + max_life;
             health.setProgress(current_life);
             lifee.setText(current_life + "/" + max_life);
-            editor.putInt("c", current_life);
+            switch (intBoss){
+                case 1: enemy.setImageResource(R.drawable.e1);
+                    break;
+                case 6: enemy.setImageResource(R.drawable.e2);
+                    break;
+                case 11: enemy.setImageResource(R.drawable.e3);
+                    break;
+                case 16: enemy.setImageResource(R.drawable.e4);
+                    intBoss = 1;
+                    break;
+            }
+
+            editor.putInt("clife", current_life);
         }
         lifee.setText(current_life + "/" + max_life);
         editor.apply();
     }
+    @SuppressLint("SetTextI18n")
     public void onAutoClickEnemy(){
         onShakeImage();
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
@@ -414,21 +301,35 @@ public class GameView extends AppCompatActivity {
         dollarperstage = (2 * (current_stage + dmg));
         current_life -= (dmg);
         ieldollar += dollarperstage + (dmg);
-        editor.putLong("el", ieldollar);
+        editor.putLong("eldollar", ieldollar);
         eldollar.setText("Eldollar: " + ieldollar);
         editor.putInt("c", current_life);
         health.setProgress(current_life);
         while (current_life < 0) {
             current_stage++;
-            editor.putInt("s", current_stage);
+            intBoss++;
+            editor.putInt("stage", current_stage);
             stage.setText("Stage " + current_stage);
             max_life += 100;
-            editor.putInt("l", max_life);
+            editor.putInt("mlife", max_life);
             health.setMax(max_life);
             current_life = current_life + max_life;
             health.setProgress(current_life);
             lifee.setText(current_life + "/" + max_life);
-            editor.putInt("c", current_life);
+
+            switch (intBoss){
+                case 1: enemy.setImageResource(R.drawable.e1);
+                    break;
+                case 6: enemy.setImageResource(R.drawable.e2);
+                    break;
+                case 11: enemy.setImageResource(R.drawable.e3);
+                    break;
+                case 16: enemy.setImageResource(R.drawable.e4);
+                    intBoss = 1;
+                    break;
+            }
+
+            editor.putInt("clife", current_life);
         }
         lifee.setText(current_life + "/" + max_life);
         editor.apply();
@@ -439,7 +340,7 @@ public class GameView extends AppCompatActivity {
     protected void onStop() {
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("c",current_life);
+        editor.putInt("clife",current_life);
         editor.apply();
         super.onStop();
     }
@@ -448,7 +349,7 @@ public class GameView extends AppCompatActivity {
     public void onAppInfo(){
         AlertDialog.Builder builder = new AlertDialog.Builder(GameView.this);
                     builder.setTitle("App info");
-                    builder.setMessage("This app/game was made by Emre.\nYou can tell me your feedback and if You have found a bug just tell it me in the group with a screenshot and a nice describtion of the bug.\n\nalpha version 1.2-0");
+                    builder.setMessage("This app/game was made by Emre.\nYou can tell me your feedback and if You have found a bug just tell it me in the group with a screenshot and a nice describtion of the bug.\n\nBeta version 2.0-0");
                     builder.setPositiveButton("Join my Telegram group!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -477,6 +378,8 @@ public class GameView extends AppCompatActivity {
             public void run() {
                 onAutoClickEnemy();
                 runnable=this;
+                sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
+                delay = sharedPref.getInt("delay",5000);
                 h.postDelayed(runnable, delay);
             }
         }, delay);
