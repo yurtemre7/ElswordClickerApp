@@ -47,6 +47,7 @@ public class GameView extends AppCompatActivity {
     //Runnable function
     Runnable runnable;
     //all saved (numbers xD)
+    String version = "beta 2.0-5";
 
 
     int delay = 10000;
@@ -213,7 +214,7 @@ public class GameView extends AppCompatActivity {
              editor.putLong("damage",dmg);
              editor.apply();
          }else{
-             Toast.makeText(this, "Not enaugh money.", Toast.LENGTH_SHORT).show();
+             Toast.makeText(this, "Not enough money.", Toast.LENGTH_SHORT).show();
          }
     }
     @SuppressLint("SetTextI18n")
@@ -235,7 +236,7 @@ public class GameView extends AppCompatActivity {
             editor.apply();
 
         }else{
-            Toast.makeText(this, "Not enaugh money.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Not enough money.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -256,7 +257,7 @@ public class GameView extends AppCompatActivity {
         if(rn.nextInt(1000-1)+1 == 1){
             current_life -= 100*(dmg + magmadmg);
             ieldollar += 100*(dollarperstage + (dmg+magmadmg));
-            Toast.makeText(this, "Crit: "+10*(dmg + magmadmg), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Crit: "+100*(dmg + magmadmg), Toast.LENGTH_LONG).show();
         }else{
             current_life -= (dmg + magmadmg);
             ieldollar += dollarperstage + (dmg+magmadmg);
@@ -349,7 +350,7 @@ public class GameView extends AppCompatActivity {
     public void onAppInfo(){
         AlertDialog.Builder builder = new AlertDialog.Builder(GameView.this);
                     builder.setTitle("App info");
-                    builder.setMessage("This app/game was made by Emre.\nYou can tell me your feedback and if You have found a bug just tell it me in the group with a screenshot and a nice describtion of the bug.\n\nBeta version 2.0-0");
+                    builder.setMessage("This app/game was made by Emre.\nYou can tell me your feedback and if You have found a bug just tell it me in the group with a screenshot and a nice describtion of the bug.\n\n"+version);
                     builder.setPositiveButton("Join my Telegram group!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
