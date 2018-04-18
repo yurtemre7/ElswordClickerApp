@@ -23,13 +23,14 @@
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" tools:targetApi="jelly_bean"  />
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:targetApi="jelly_bean" />
 
         <ImageView
             android:id="@+id/enemy"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="280dp"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
             android:clickable="true"
@@ -42,7 +43,7 @@
             android:scaleType="centerInside"
             android:soundEffectsEnabled="true"
             app:srcCompat="@drawable/e1"
-            tools:targetApi="o"  />
+            tools:targetApi="o" />
 
         <TextView
             android:id="@+id/lifee"
@@ -58,20 +59,6 @@
             android:layout_height="wrap_content"
             android:progressTint="@android:color/black"
             tools:targetApi="lollipop" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="40dp" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="casual"
-            android:text="@string/skills"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" tools:targetApi="jelly_bean" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,7 +118,7 @@
                 android:fontFamily="casual"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold" tools:targetApi="jelly_bean"/>
 
             <Button
                 android:id="@+id/button2"
@@ -141,46 +128,8 @@
                 android:fontFamily="casual"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold" tools:targetApi="jelly_bean"/>
 
-            <Button
-                android:id="@+id/button3"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="casual"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/button4"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="casual"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-            <Button
-                android:id="@+id/button5"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="casual"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/button6"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="casual"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
