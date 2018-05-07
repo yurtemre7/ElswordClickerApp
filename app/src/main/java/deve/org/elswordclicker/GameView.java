@@ -46,9 +46,7 @@ public class GameView extends AppCompatActivity {
     Random rn = new Random();
     //Runnable function
     Runnable runnable;
-    //all saved (numbers xD)
-    String version = "beta 2.0-5";
-
+    String version = "beta 2.0-6";
 
     int delay = 10000;
     int autoclick = 0;
@@ -61,8 +59,6 @@ public class GameView extends AppCompatActivity {
 
     long longswoard_price = 100;
     int autoclick_price = 15000;
-
-
 
     long dollarperstage;
 
@@ -94,6 +90,7 @@ public class GameView extends AppCompatActivity {
         acs = findViewById(R.id.acs);
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         //methods to let this stuff being clickable
         enemy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,8 +187,12 @@ public class GameView extends AppCompatActivity {
         lifee.setText(current_life+"/"+max_life);
         btn.setText("Longsword\n"+longswoard_price +"ED\n" + "+1 DMG");
         autoclick_price = sharedPref.getInt("autoclickp",15000);
-        btn2.setText("Autoclick\n"+autoclick_price+"ED\n"+"-100ms");
         delay = sharedPref.getInt("delay",5000);
+        if(delay!=100){
+            btn2.setText("Autoclick\n"+autoclick_price+"ED\n"+"-100ms");
+        }else{
+            btn2.setText("Autoclick reached the maximum delay.");
+        }
         acs.setText("dmg/ms: "+dmg+"/"+delay);
         super.onStart();
     }
@@ -220,24 +221,30 @@ public class GameView extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void onBuyAutoClick(){
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
-        if(ieldollar>=autoclick_price){
-            ieldollar -= autoclick_price;
-            autoclick++;
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("ac",autoclick);
-            editor.putLong("eldollar", ieldollar);
-            eldollar.setText("Eldollar: "+ieldollar);
-            delay = delay - 100;
-            editor.putInt("delay",delay);
-            autoclick_price += 15000;
-            editor.putInt("autoclickp", autoclick_price);
-            btn2.setText("Autoclick\n"+autoclick_price +"ED\n" + "-100ms");
-            acs.setText("dmg/ms: "+dmg+"/"+delay);
-            editor.apply();
+        if(delay != 100){
+            if(ieldollar>=autoclick_price){
+                ieldollar -= autoclick_price;
+                autoclick++;
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("ac",autoclick);
+                editor.putLong("eldollar", ieldollar);
+                eldollar.setText("Eldollar: "+ieldollar);
+                delay = delay - 100;
+                editor.putInt("delay",delay);
+                autoclick_price += 15000;
+                editor.putInt("autoclickp", autoclick_price);
+                btn2.setText("Autoclick\n"+autoclick_price +"ED\n" + "-100ms");
+                acs.setText("dmg/ms: "+dmg+"/"+delay);
+                editor.apply();
 
+            }else{
+                Toast.makeText(this, "Not enough money.", Toast.LENGTH_SHORT).show();
+            }
         }else{
-            Toast.makeText(this, "Not enough money.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You reached the maximum delay.", Toast.LENGTH_SHORT).show();
+            btn2.setText("Autoclick reached the maximum delay.");
         }
+
     }
 
     //shacking Enemy function
@@ -300,8 +307,14 @@ public class GameView extends AppCompatActivity {
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         dollarperstage = (2 * (current_stage + dmg));
-        current_life -= (dmg);
-        ieldollar += dollarperstage + (dmg);
+        if(rn.nextInt(1000-1)+1 == 1){
+            current_life -= 100*(dmg);
+            ieldollar += 100*(dollarperstage + (dmg));
+            Toast.makeText(this, "Crit: "+100*(dmg), Toast.LENGTH_LONG).show();
+        }else{
+            current_life -= (dmg);
+            ieldollar += dollarperstage + (dmg);
+        }
         editor.putLong("eldollar", ieldollar);
         eldollar.setText("Eldollar: " + ieldollar);
         editor.putInt("c", current_life);

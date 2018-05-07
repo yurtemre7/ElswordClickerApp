@@ -22,7 +22,7 @@
             android:text="@string/stage_1"
             android:textAlignment="center"
             android:textAllCaps="true"
-            android:textColor="@color/black"
+            android:textColor="@android:color/background_light"
             android:textSize="30sp"
             android:textStyle="bold"
             tools:targetApi="jelly_bean" />
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/background_light" />
 
         <ProgressBar
             android:id="@+id/health"
@@ -99,9 +99,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="casual"
             android:text="@string/shop2"
-            android:textColor="@color/black"
+            android:textColor="@android:color/background_light"
             android:textSize="18sp"
-            android:textStyle="bold" tools:targetApi="jelly_bean" />
+            android:textStyle="bold"
+            tools:targetApi="jelly_bean" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -116,8 +117,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="casual"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textStyle="bold" tools:targetApi="jelly_bean"/>
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                tools:targetApi="jelly_bean" />
 
             <Button
                 android:id="@+id/button2"
@@ -126,8 +128,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="casual"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textStyle="bold" tools:targetApi="jelly_bean"/>
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                tools:targetApi="jelly_bean" />
 
         </LinearLayout>
     </LinearLayout>
