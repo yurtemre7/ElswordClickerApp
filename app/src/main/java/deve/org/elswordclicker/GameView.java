@@ -10,7 +10,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +30,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Objects;
 import java.util.Random;
 //class
 public class GameView extends AppCompatActivity {
@@ -34,8 +41,6 @@ public class GameView extends AppCompatActivity {
     ImageView enemy,magma,buggiebomb,milch;
     //the healthbar
     ProgressBar health;
-    //all the buttons used
-    Button btn,btn2;
     //all the textviews used
     TextView stage, eldollar,dmmg,lifee,acs;
     //for having delays
@@ -46,7 +51,7 @@ public class GameView extends AppCompatActivity {
     Random rn = new Random();
     //Runnable function
     Runnable runnable;
-    String version = "beta 2.0-6";
+    String version = "beta 3.0-0";
 
     int delay = 10000;
     int autoclick = 0;
@@ -72,10 +77,11 @@ public class GameView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gameview_main);
+        setContentView(R.layout.menu_main);
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         //telling the app where anything is
         enemy = findViewById(R.id.enemy);
+        enemy.setImageDrawable(getDrawable(R.drawable.e1));
         magma = findViewById(R.id.magma);
         buggiebomb = findViewById(R.id.buggiebomb);
         milch = findViewById(R.id.milch);
@@ -85,12 +91,58 @@ public class GameView extends AppCompatActivity {
         dmmg = findViewById(R.id.dmmg);
         lifee = findViewById(R.id.lifee);
         rl = findViewById(R.id.rl);
-        btn = findViewById(R.id.button);
-        btn2 = findViewById(R.id.button2);
         acs = findViewById(R.id.acs);
+
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        mToolbar.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+        final DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, mToolbar,R.string.ab_open,R.string.ab_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                DrawerLayout drawerLayout1 = findViewById(R.id.drawer_layout);
+                switch (id){
+                    case R.id.idItem1:
+                        Toast.makeText(GameView.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.idItem2:
+                        Toast.makeText(GameView.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.idItem3:
+                        Toast.makeText(GameView.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.idItem4:
+                        Toast.makeText(GameView.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.idItem5:
+                        Toast.makeText(GameView.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.idItem6:
+                        onBeforeBuyLongsword(item.getTitle().toString());
+                        break;
+                    case R.id.idItem7:
+                        onBeforeBuyLongsword(item.getTitle().toString());
+                        break;
+                    case R.id.idItem8:
+                        drawerLayout1.closeDrawer(GravityCompat.START);
+                        onAppInfo();
+                        break;
+                }
+
+                drawerLayout1.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+
+
         //methods to let this stuff being clickable
         enemy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,36 +186,7 @@ public class GameView extends AppCompatActivity {
                 }, (1000)*180);
             }
         });
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBuyLongsword();
-            }
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBuyAutoClick();
-            }
-        });
 
-    }
-    //function for creating the options menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    //function for clicking the options menu
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        //when you click info
-        if (id == R.id.info) {
-           onAppInfo();
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     //Setting all variables to their saved value on every application start
@@ -185,18 +208,84 @@ public class GameView extends AppCompatActivity {
         longswoard_price = sharedPref.getLong("longswordp",100);
         dmmg.setText("Damage: "+dmg);
         lifee.setText(current_life+"/"+max_life);
-        btn.setText("Longsword\n"+longswoard_price +"ED\n" + "+1 DMG");
         autoclick_price = sharedPref.getInt("autoclickp",15000);
         delay = sharedPref.getInt("delay",5000);
-        if(delay!=100){
-            btn2.setText("Autoclick\n"+autoclick_price+"ED\n"+"-100ms");
-        }else{
-            btn2.setText("Autoclick reached the maximum delay.");
-        }
-        acs.setText("dmg/ms: "+dmg+"/"+delay);
+        acs.setText("dmg/ms: "+dmg/10+"/"+delay);
         super.onStart();
     }
+    public void onBeforeBuyLongsword(String item){
 
+        final long tenLongswords = 10*longswoard_price + 10*100;
+
+        final double l1 = ieldollar/longswoard_price;
+        final double l10 = ieldollar/tenLongswords;
+
+        if(item.equals("Longsword")){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Longsword");
+            builder.setMessage("Pricelist:" +
+                    "\n" +
+                    "\n" +
+                    "Buy 1 for "+ longswoard_price+" ED  (" +(l1) +")" +
+                    "\n" +
+                    "Buy 10 for "+tenLongswords+" ED  (" + (l10) + ")" +
+                    "\n" +
+                    "Buy max. for your ED");
+            builder.setPositiveButton("Buy 1", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    onBuyLongsword();
+                }
+            });
+            builder.setNegativeButton("Buy 10", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if(ieldollar>tenLongswords){
+                        for(int e = 0; e<10; e++){
+                            onBuyLongsword();
+                        }
+                    }else{
+                        Toast.makeText(GameView.this, "Not enough money.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            builder.setNeutralButton("Buy max.", new DialogInterface.OnClickListener() {
+                int count;
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                        while(ieldollar>=longswoard_price){
+                            onBuyLongsword();
+                            count++;
+                        }
+                        Toast.makeText(GameView.this, "You bought "+count+" time(s).", Toast.LENGTH_SHORT).show();
+                }
+            });
+            builder.show();
+        }
+        else if(item.equals("Autoclicker")){
+            if(delay!=100){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Longsword");
+                builder.setMessage("Do you really want to buy 1 Autoclicker for "+autoclick_price+" ED?");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        onBuyAutoClick();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                builder.show();
+            }else{
+                Toast.makeText(this, "You already reached the maximum.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
     //buying Long Sword function
     @SuppressLint("SetTextI18n")
     public void onBuyLongsword(){
@@ -209,7 +298,6 @@ public class GameView extends AppCompatActivity {
              editor.putLong("eldollar", ieldollar);
              eldollar.setText("Eldollar: "+ieldollar);
              longswoard_price += 100;
-             btn.setText("Longsword\n"+longswoard_price +"ED\n" + "+1 DMG");
              acs.setText("dmg/ms: "+dmg+"/"+delay);
              editor.putLong("longswordp",longswoard_price);
              editor.putLong("damage",dmg);
@@ -233,8 +321,7 @@ public class GameView extends AppCompatActivity {
                 editor.putInt("delay",delay);
                 autoclick_price += 15000;
                 editor.putInt("autoclickp", autoclick_price);
-                btn2.setText("Autoclick\n"+autoclick_price +"ED\n" + "-100ms");
-                acs.setText("dmg/ms: "+dmg+"/"+delay);
+                acs.setText("dmg/ms: "+dmg/10+"/"+delay);
                 editor.apply();
 
             }else{
@@ -242,7 +329,6 @@ public class GameView extends AppCompatActivity {
             }
         }else{
             Toast.makeText(this, "You reached the maximum delay.", Toast.LENGTH_SHORT).show();
-            btn2.setText("Autoclick reached the maximum delay.");
         }
 
     }
@@ -284,18 +370,6 @@ public class GameView extends AppCompatActivity {
             current_life = current_life + max_life;
             health.setProgress(current_life);
             lifee.setText(current_life + "/" + max_life);
-            switch (intBoss){
-                case 1: enemy.setImageResource(R.drawable.e1);
-                    break;
-                case 6: enemy.setImageResource(R.drawable.e2);
-                    break;
-                case 11: enemy.setImageResource(R.drawable.e3);
-                    break;
-                case 16: enemy.setImageResource(R.drawable.e4);
-                    intBoss = 1;
-                    break;
-            }
-
             editor.putInt("clife", current_life);
         }
         lifee.setText(current_life + "/" + max_life);
@@ -303,23 +377,23 @@ public class GameView extends AppCompatActivity {
     }
     @SuppressLint("SetTextI18n")
     public void onAutoClickEnemy(){
-        onShakeImage();
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         dollarperstage = (2 * (current_stage + dmg));
         if(rn.nextInt(1000-1)+1 == 1){
-            current_life -= 100*(dmg);
-            ieldollar += 100*(dollarperstage + (dmg));
-            Toast.makeText(this, "Crit: "+100*(dmg), Toast.LENGTH_LONG).show();
+            current_life -= 100*(dmg/10);
+            ieldollar += 100*(dollarperstage + (dmg/10));
+            Toast.makeText(this, "Crit: "+100*(dmg/10), Toast.LENGTH_LONG).show();
         }else{
-            current_life -= (dmg);
-            ieldollar += dollarperstage + (dmg);
+            current_life -= (dmg/10);
+            ieldollar += dollarperstage + (dmg/10);
         }
         editor.putLong("eldollar", ieldollar);
         eldollar.setText("Eldollar: " + ieldollar);
         editor.putInt("c", current_life);
         health.setProgress(current_life);
         while (current_life < 0) {
+            onShakeImage();
             current_stage++;
             intBoss++;
             editor.putInt("stage", current_stage);
@@ -330,19 +404,6 @@ public class GameView extends AppCompatActivity {
             current_life = current_life + max_life;
             health.setProgress(current_life);
             lifee.setText(current_life + "/" + max_life);
-
-            switch (intBoss){
-                case 1: enemy.setImageResource(R.drawable.e1);
-                    break;
-                case 6: enemy.setImageResource(R.drawable.e2);
-                    break;
-                case 11: enemy.setImageResource(R.drawable.e3);
-                    break;
-                case 16: enemy.setImageResource(R.drawable.e4);
-                    intBoss = 1;
-                    break;
-            }
-
             editor.putInt("clife", current_life);
         }
         lifee.setText(current_life + "/" + max_life);
