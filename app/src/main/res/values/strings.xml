@@ -22,4 +22,9 @@
     <string name="longsword">Longsword</string>
     <string name="autoclicker">Autoclicker</string>
     <string name="info">Info</string>
+    <string name="background_1">Background 1</string>
+    <string name="background_2">Background 2</string>
+    <string name="background_3">Background 3</string>
+    <string name="background_4">Background 4</string>
+    <string name="background_5">Background 5</string>
 </resources>

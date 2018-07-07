@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-        <item android:id="@+id/idItem1" android:title="Item1"
+        <item android:id="@+id/idItem1" android:title="@string/background_1"
             />
-        <item android:id="@+id/idItem2" android:title="Item2"
+        <item android:id="@+id/idItem2" android:title="@string/background_2"
             />
-        <item android:id="@+id/idItem3" android:title="Item3"
+        <item android:id="@+id/idItem3" android:title="@string/background_3"
             />
-        <item android:id="@+id/idItem4" android:title="Item4"
+        <item android:id="@+id/idItem4" android:title="@string/background_4"
             />
-        <item android:id="@+id/idItem5" android:title="Item5"
+        <item android:id="@+id/idItem5" android:title="@string/background_5"
             />
     </group>
     <group android:checkableBehavior="single">

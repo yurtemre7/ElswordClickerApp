@@ -15,6 +15,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,8 +29,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.util.Objects;
 import java.util.Random;
@@ -38,7 +43,7 @@ public class GameView extends AppCompatActivity {
     //for saving variables
     SharedPreferences sharedPref;
     //all the images used
-    ImageView enemy,magma,buggiebomb,milch;
+    ImageView enemy,magma,buggiebomb,milch,ivB;
     //the healthbar
     ProgressBar health;
     //all the textviews used
@@ -46,7 +51,7 @@ public class GameView extends AppCompatActivity {
     //for having delays
     Handler h = new Handler();
     //the layout
-    LinearLayout rl;
+    ScrollView rll;
     //method to get random integer
     Random rn = new Random();
     //Runnable function
@@ -81,7 +86,6 @@ public class GameView extends AppCompatActivity {
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         //telling the app where anything is
         enemy = findViewById(R.id.enemy);
-        enemy.setImageDrawable(getDrawable(R.drawable.e1));
         magma = findViewById(R.id.magma);
         buggiebomb = findViewById(R.id.buggiebomb);
         milch = findViewById(R.id.milch);
@@ -90,18 +94,20 @@ public class GameView extends AppCompatActivity {
         eldollar = findViewById(R.id.eldollar);
         dmmg = findViewById(R.id.dmmg);
         lifee = findViewById(R.id.lifee);
-        rl = findViewById(R.id.rl);
+        rll = findViewById(R.id.rll);
         acs = findViewById(R.id.acs);
+        ivB = findViewById(R.id.ivB);
 
-        Toolbar mToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().addOnMenuVisibilityListener(new ActionBar.OnMenuVisibilityListener() {
+            @Override
+            public void onMenuVisibilityChanged(boolean isVisible) {
+
+            }
+        });
         getSupportActionBar().setDisplayShowTitleEnabled(true);
 
-        final DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, mToolbar,R.string.ab_open,R.string.ab_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        Glide.with(this).load("https://cdna.artstation.com/p/assets/images/images/004/552/832/large/ji-hyun-kim-0-1.jpg?1484534208").into(ivB);
+        Glide.with(this).load("https://vignette.wikia.nocookie.net/murderseries/images/1/1b/Diabolicesper.png/revision/latest?cb=20160313223239").into(enemy);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -111,19 +117,14 @@ public class GameView extends AppCompatActivity {
                 DrawerLayout drawerLayout1 = findViewById(R.id.drawer_layout);
                 switch (id){
                     case R.id.idItem1:
-                        Toast.makeText(GameView.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.idItem2:
-                        Toast.makeText(GameView.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.idItem3:
-                        Toast.makeText(GameView.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.idItem4:
-                        Toast.makeText(GameView.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.idItem5:
-                        Toast.makeText(GameView.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.idItem6:
                         onBeforeBuyLongsword(item.getTitle().toString());
@@ -193,10 +194,11 @@ public class GameView extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     @Override
     protected void onStart() {
+        Glide.with(this).load("https://cdna.artstation.com/p/assets/images/images/004/552/832/large/ji-hyun-kim-0-1.jpg?1484534208").into(ivB);
+        Glide.with(this).load("https://vignette.wikia.nocookie.net/murderseries/images/1/1b/Diabolicesper.png/revision/latest?cb=20160313223239").into(enemy);
         sharedPref = getSharedPreferences("data2", Context.MODE_PRIVATE);
         max_life = sharedPref.getInt("mlife",100);
         intBoss = sharedPref.getInt("boss",1);
-        enemy.setImageResource(R.drawable.e1);
         health.setMax(max_life);
         current_life = sharedPref.getInt("clife",100);
         health.setProgress(current_life);
