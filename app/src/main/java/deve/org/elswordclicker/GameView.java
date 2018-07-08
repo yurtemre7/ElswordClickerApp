@@ -16,20 +16,14 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,7 +50,7 @@ public class GameView extends AppCompatActivity {
     Random rn = new Random();
     //Runnable function
     Runnable runnable;
-    String version = "beta 3.0-0";
+    String version = "beta 3.5-0";
 
     int delay = 10000;
     int autoclick = 0;
@@ -77,7 +71,6 @@ public class GameView extends AppCompatActivity {
     int intBoss = 1;
 
     //on create function
-    @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,16 +91,8 @@ public class GameView extends AppCompatActivity {
         acs = findViewById(R.id.acs);
         ivB = findViewById(R.id.ivB);
 
-        getSupportActionBar().addOnMenuVisibilityListener(new ActionBar.OnMenuVisibilityListener() {
-            @Override
-            public void onMenuVisibilityChanged(boolean isVisible) {
 
-            }
-        });
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-
-        Glide.with(this).load("https://cdna.artstation.com/p/assets/images/images/004/552/832/large/ji-hyun-kim-0-1.jpg?1484534208").into(ivB);
-        Glide.with(this).load("https://vignette.wikia.nocookie.net/murderseries/images/1/1b/Diabolicesper.png/revision/latest?cb=20160313223239").into(enemy);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(true);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

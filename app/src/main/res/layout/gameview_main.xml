@@ -15,7 +15,8 @@
             android:id="@+id/ivB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/ok" />
 
         <TextView
             android:id="@+id/stage"
@@ -53,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:progressTint="@android:color/holo_red_dark"
-            android:layout_below="@id/enemy" />
+            android:layout_below="@id/enemy" tools:targetApi="lollipop" />
 
         <TextView
             android:id="@+id/lifee"
